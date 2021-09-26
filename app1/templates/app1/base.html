@@ -1,0 +1,265 @@
+<!doctype html>
+
+{% load static %}
+<!-- {% static 'static_jquery/js/jquery.js' %} -->
+
+
+<html lang="en">
+<head>
+<!-- youtube api key : AIzaSyCeSG4bCmCPlQfeW035yy39bsDa79kHQlM -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Haider's Website</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'app1/mystyles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app1/project1_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app1/project2_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+
+
+    <!-- for debugging : everytime refresh page will update css-->
+    <link rel="stylesheet" href="/static/app1/mystyles.css?{% now "U" %}"/>
+    <link rel="stylesheet" href="/static/app1/project1_styles.css?{% now "U" %}"/>
+    
+
+</head>
+
+<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
+<script src="{% static 'app1/ResizeSensor.js' %}"></script>
+<script src="{% static 'app1/ElementQueries.js' %}"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<body>
+
+
+    <div class="nav_header">
+        <nav>
+
+            <div class="nav_together">
+
+                <a class="logo-img" href="{% url 'app1:app1-home' %}">
+                    <img class="logo-img" src="{% get_media_prefix %}my_logo2.png">
+                </a>
+            
+            
+            
+            <ul class="nav_links my_navbar centering hamburger">
+                <li ><a href="{% url 'project1:intro' %}">Project Simple Grapher</a></li>
+                <li><a href="{% url 'project2:intro' %}">Project Text Analyzer</a></li>
+
+                <li><a href="{% url 'app1:app1-about' %}">About</a></li>
+                
+            </ul>
+
+            </div>
+
+            <div class="centering hamburger nav-right-wrap" style="display: none;">
+                <div>
+                {% if user.is_authenticated %}
+                    <a class="cta" href="{% url 'logout' %}"><button class="nav-button">Logout</button></a>
+                {% else %}
+                    <a class="cta" href="{% url 'login' %}"><button class="nav-button">Log-in</button></a>
+                {% endif%}
+                </div>
+
+                <div class="profile-pic-wrap">
+
+                    {% if user.is_authenticated %}
+                        {% if user.profile.image.url %}
+                            <img class="profile-pic  not-invisible " 
+                            src="{{ user.profile.image.url }}" onclick="profile_drop_down_function()">
+                        {% else %}
+                            <img class="profile-pic  not-invisible " 
+                            src="{% get_media_prefix %}based-logo.png" onclick="profile_drop_down_function()">
+                        {% endif %}
+
+
+
+                    
+                        {% comment %} <img class="profile-pic  invisible " 
+                        src="{% get_media_prefix %}based-logo.png" onclick="profile_drop_down_function()"> {% endcomment %}
+
+                    {% endif %}
+                    
+                    
+                    <ul class="profile-drop-menu">
+                        <li ><a href="{% url 'my_users:profile' %}">Account</a></li>
+                        <li><a>Settings</a></li>
+                        <li><a>Sign out </a></li>
+                    </ul>
+                </div>
+
+            </div>
+            
+            
+            
+            
+            <div class="drop_menu">
+            <div class="hamburger_button" >
+                <div class="hamburger_container" onclick="drop_down_function()">
+                    <div class="hamburger_button_inner  bar1"></div>
+                    <div class="hamburger_button_inner  bar2"></div>
+                    <div class="hamburger_button_inner  bar3"></div>
+                </div>
+                
+                
+            </div>
+            
+            
+                <ul id="drop_menu_list" class="drop_menu_list" >
+                    <li ><a href="{% url 'project1:intro' %}">Project Simple Grapher</a></li>
+                    <li><a href="{% url 'project2:intro' %}">Project Text Analyzer</a></li>
+                    <li><a href="https://haideralrustem.github.io/" target="_blank">About</a></li>
+                    
+                </ul>
+
+            </div>
+            
+
+
+
+        </nav>
+
+
+    </div>
+
+
+
+
+    <h1 class="headers"></h1>
+
+    {% if messages  %}
+        {% for m in messages %}
+            <div class="alert alert-{{ m.tags }}"> {{ m }} - {{m.tags}} </div>
+        {% endfor %}
+    {% endif %}
+
+
+    
+
+    <div class="child-block">
+        {% block children %} {% endblock %}
+    </div>
+
+    
+    <div class='footer'>
+
+        <div class="my-row">
+
+            <div class="side-footer"> 
+                <img class="logo-img-footer" 
+                src="{% get_media_prefix %}my_logo2.png"
+                >  
+            </div>
+
+        
+        <div class="footer-row-wrap">
+            <div id='first-footer-row' class="my-row footer-row"> 
+                <div class="footer-item footer-button"><a href="{% url 'app1:app1-home' %}">Home</a></div>
+                <div class="footer-item footer-button"><a href="{% url 'app1:app1-about' %}">About</a></div>
+                <div class="footer-item footer-button"><a href="https://haideralrustem.github.io/#/contact" target="_blank">Contact</a></div>
+                <div class="footer-item footer-button" style="width:30%"><a href="https://haideralrustem.github.io/" target="_blank">Landing Page</a></div>
+            </div>
+            
+
+            <div id="second-footer-row" class="my-row footer-row">
+                <div class="footer-item footer-icon">
+                    <img data-url="https://www.linkedin.com/in/haider-al-rustem-32010515a/" class="social-media-icon" src="{% get_media_prefix %}linkedin1.png" onclick="routeToUrl(this)">
+                </div> 
+                <div class="footer-item footer-icon">
+                    <img data-url="https://www.facebook.com/hydar.ali.92" class="social-media-icon" src="{% get_media_prefix %}facebook_logo2.png" onclick="routeToUrl(this)">
+                </div>
+                <div class="footer-item footer-icon">
+                    <img data-url="https://github.com/haideralrustem" class="social-media-icon" src="{% get_media_prefix %}github1.png" onclick="routeToUrl(this)">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="flex-side-end" class="footer-side-end">
+            <div>
+                <p>832-249-0063</p>
+                <p>haideralrustem@yahoo.com</p>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="site-map">
+            <div class="site-map-column">
+                <p class="site-map-column-title">Analytical Projects</p>
+                <p class="site-map-column-subtitle">
+                    <a href="{% url 'project1:intro' %}">Simple Grapher</a>
+                </p>
+                <p class="site-map-column-subtitle">
+                    <a href="{% url 'project2:intro' %}">Text Analyzer</a>
+                </p>
+                
+            </div>
+
+             <div class="site-map-column">
+                <p class="site-map-column-title">Other Works</p>
+                <p class="site-map-column-subtitle">
+                    <a href="https://play.google.com/store/apps/details?id=com.haideralrustem1990.repark" target="_blank">
+                        Re-Park App
+                    </a>
+                </p>
+                <p class="site-map-column-subtitle">
+                    <a href="https://public.tableau.com/profile/haider.al.rustem#!/?newProfile=&activeTab=0" target="_blank">
+                        Tableau portfolio
+                    </a>
+                </p>
+            </div>
+
+            <!--
+            <div class="site-map-column">
+                <p class="site-map-column-title">Title</p>
+                <p class="site-map-column-subtitle">Site Map1</p>
+            </div> -->
+        </div>
+
+        <div id="block-side-end" class="footer-side-end">
+            <div class="footer-contact">
+                <p>832-249-0063</p>
+                
+            </div>
+            <div class="footer-contact footer-contact-tail">
+                <p>haideralrustem@yahoo.com</p>
+            </div>
+        </div>
+    </div>
+    
+
+
+    
+
+</body>
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script src="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="{% static 'app1/ResizeSensor.js' %}"></script>
+<script src="{% static 'app1/ElementQueries.js' %}"></script>
+<script src="{% static 'app1/my_javascript.js' %}"></script>
+
+
+<script>
+
+function routeToUrl(clickedImg) {
+    let urlRoute = clickedImg.getAttribute('data-url');
+    //window.location.href = urlRoute;
+    window.open(urlRoute,
+    '_blank' // <- This is what makes it open in a new window.
+);
+}
+</script>
+</html>

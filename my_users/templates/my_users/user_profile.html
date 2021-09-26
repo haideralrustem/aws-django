@@ -1,0 +1,245 @@
+{% extends "app1/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block children %}
+
+<div class="profile-content-wrap">
+    
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/master
+    {% if success_msg_visible.display_status == True %}
+        <script>
+            var message_ele = document.querySelector('div.alert');
+            setTimeout(function(){ 
+            message_ele.style.opacity = "0"; 
+            
+            }, 2000);
+
+            setTimeout(function(){
+                message_ele.style.height = '0px';
+            }, 4000);
+        </script>
+    {% endif %}
+
+    <div class="profile-show">
+        <p class="profile-show-paragraph"> Logged in as : <span class="bold-text logged-in-as">{{ user.username}}</span> </p>
+        
+    </div>
+
+    <hr id="profile-first-divider" class="divider">
+
+    <div class="user-profile-container">
+        <div id="user-info"><h4>User info</h4></div>
+
+        <div class="profile-card">
+            
+            <img class="profile-card-photo" src="{{ user.profile.image.url }}">
+            <p class="change-profile-pic-text"><a href="">change profile picture</a></p>
+
+            <div class="profile-card-text-box">
+
+               
+                <div class="my-row user-info-line">
+                    <div id="first" class="user-info-column">
+                        <p>Username: </p>
+
+                        <p id="user-name-prompt" class="user-name-field samller">
+                            
+                            <span class="inner-prompt">{{ user.username}}</span>
+                            
+                            
+                            <span class="edit-profile-icon-span user-name-item" onclick="show_profile_edit(this)">
+                                <span >
+                                    <input class="user-name-item  edit-profile-icon" type="image" src="{% get_media_prefix %}edit.png" />
+                                </span> 
+
+                                <span class="user-name-item edit-text">edit</span>
+                                
+                                <span class="update-success-msg"> <span>&#10003;</span> updated to: <span class="update-msg-append"></span> </span>
+                            </span>
+
+                            <div id="user-update-field" class="user-update-field">
+                                
+                                <form id="username-update-form" class="crispy-form update-form" method="POST" enctype="multipart/form-data">
+                                 {% csrf_token %}
+                                 {% for field in u_form %}
+                                 <div class="form-group">
+                                    <label class="">{{ field.label }}</label>
+                                    {{ field }}
+                                 </div>
+                                 {%endfor%}
+                                    
+                                 <button class="btn btn-primary user-update-btn" type="submit" onclick="update_profile_info(this)"> Update </button>
+                                    
+
+                                </form>
+                            </div>
+
+                            
+
+
+                        </p>
+
+                        <p>Email: </p>
+
+                        <p id="email-prompt" class="email-field samller">{{ user.email }} 
+                            
+                            <span class="edit-profile-icon-span email-item" onclick="show_profile_edit(this)">
+                            <span><input class="user-name-item  edit-profile-icon" type="image" src="{% get_media_prefix %}edit.png" /></span> 
+                            <span class="email-item edit-text">edit</span> 
+                            </span>
+
+                            <div id="email-update-field" class="email-update-field">
+                                
+                            </div>
+
+                           
+                           
+                            <!-- <button class="btn btn-primary user-update-btn" type="submit" onclick="update_profile_info(this)"> Update </button> -->
+
+                            
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% comment %} need 'EDIT profile' button here (drops down) {% endcomment %}
+
+    <!-- <div class="profile-info-form">
+        <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                    <div id="tagger">
+                        {{ u_form|crispy }}
+
+                    </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit"> Update </button>
+                </div>
+
+        </form>
+
+        <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                    <div id="tagger">
+                        {{ u_email_form|crispy }}
+
+                    </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit"> Update </button>
+                </div>
+
+        </form>
+
+        <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                    <div id="tagger">
+                        {{ p_form|crispy }}
+
+                    </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit"> Update </button>
+                </div>
+
+        </form>
+
+
+    </div> -->
+
+</div>
+
+{{users}}
+
+{% block javascript %}
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script>
+    console.log('hello ww');
+    $("#username-update-form").submit(function (e) {
+    // preventing from page reload and default actions
+    e.preventDefault();
+    // serialize the data for sending the form data.
+    var serializedData = $(this).serialize();
+    // make POST ajax call
+    $.ajax({
+        type: 'POST',
+        url: "{% url 'my_users:post_update_userform' %}",
+        data: serializedData,
+        success: function (response) {
+            // on successfull creating object
+            // 1. clear the form.
+            $("#username-update-form").trigger('reset');
+            // 2. focus to nickname input 
+            $("#id_username").focus();
+            
+            $('span.update-success-msg').css("opacity", "1");
+                        
+            
+            // get request
+            $.ajax ({
+                type : 'GET',
+                url :  "{% url 'my_users:get_user' %}",
+                data : {'requested_username': response["new_username"]},
+                dataType: 'json',
+                success: function(response) {    
+                    let txt = response.user_info.username 
+                    $('#user-name-prompt .update-msg-append').text(txt);
+                    $('#user-name-prompt .inner-prompt').text(response.user_info.username);
+                    $('#id_username').val( response.user_info.username );
+                    $('span.logged-in-as').text(response.user_info.username);
+                },
+                error : function(response) {
+                    console.log(' > GET req. FAILED. Response text is: ', response);
+                    
+                }
+            });
+
+
+
+            
+            setTimeout(function(){
+                $('span.update-success-msg').css("opacity", "0");
+            }, 3000);
+            console.log('\n >> : \n', response['status']);
+
+
+            
+            
+        },
+        error: function (response) {
+            // alert the error if any error occured
+            console.log(response["responseJSON"]["error"]);
+            alert(response["responseJSON"]["error"]);
+        }
+    })
+});
+
+   
+
+
+
+</script>
+{% endblock javascript %}
+
+{% endblock children %}
+
+
+

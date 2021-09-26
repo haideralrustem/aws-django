@@ -1,0 +1,80 @@
+{% extends "app1/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block children %}
+
+<h3>TEsting
+</h3>
+
+<form id="username-update-form" class="crispy-form update-form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in u_form %}
+    <div class="form-group">
+       <label class="">{{ field.label }}</label>
+       {{ field }}
+    </div>
+    {%endfor%}
+       
+    <button class="btn btn-primary" type="submit"> Update </button>
+       
+
+</form>
+
+
+{% block javascript %}
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script>
+
+    console.log('hello ww');
+   
+
+
+    $("#username-update-form").submit(function (e) {
+    // preventing from page reload and default actions
+    e.preventDefault();
+    // serialize the data for sending the form data.
+    var serializedData = $(this).serialize();
+    // make POST ajax call
+    $.ajax({
+        type: 'POST',
+        url: "{% url 'my_users:test_post_update_userform' %}",
+        data: serializedData,
+        success: function (response) {
+            // on successfull creating object
+            // 1. clear the form.
+            $("#username-update-form").trigger('reset');
+            // 2. focus to nickname input 
+            $("#id_username").focus();
+            
+            $('span.update-success-msg').css("opacity", "1");
+
+
+            setTimeout(function(){
+                $('span.update-success-msg').css("opacity", "0");
+            }, 3000);
+            console.log('\n >> : \n', response['status']);
+
+
+            
+            
+        },
+        error: function (response) {
+            // alert the error if any error occured
+            console.log(response["responseJSON"]["error"]);
+            alert(response["responseJSON"]["error"]);
+        }
+    })
+});
+
+   
+
+
+
+</script>
+{% endblock javascript %}
+
+{% endblock children %}

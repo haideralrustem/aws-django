@@ -1,0 +1,153 @@
+
+<div class='format-choices-wrap'>
+    
+    
+      <form id="detect-table-format-form" class="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ detect_table_format.text_value }}
+        {{ detect_table_format.text_key }}
+          <button type="submit" class="btn btn-primary tooltip-creator" 
+          onclick="auto_format_data(this)">Auto Format Data</button>
+                       
+      </form>
+
+      <span class="tooltiptext">
+        <p>
+        Use this button to let the page automatically format the data based on 
+        the prevalent values in under each column !
+        </p>
+        
+       </span>
+      
+     
+      
+   
+</div>
+<p class="format-success-text"> All data has been auto-formatted ! </p>
+<button id="got-it-btn" class="btn btn-primary tooltip-creator" >
+  Next</button>
+
+  <script>
+      // on spawn
+      $('.format-choices-wrap .tooltiptext')
+      
+
+      
+      $(function() {
+        
+        if ($(window).width() > 700) {
+          
+          $('#detect-table-format-form button').hover(function() {
+              $('.format-choices-wrap .tooltiptext').css('opacity', '1');
+          }, function() {
+              // on mouseout, reset the background colour
+              $('.format-choices-wrap .tooltiptext').css('opacity', '0');
+          });
+        }
+       });
+      
+      
+
+
+
+      function auto_format_data(clicked_btn) {
+        let text_key_field = $('#detect-table-format-form #id_text_key' );
+        let text_value_field = $('#detect-table-format-form #id_text_value' );
+        text_key_field.val('detect-table-format');
+        text_value_field.val('auto-format');
+      
+    }
+
+    $(document).ready(function (){
+            $("#got-it-btn").click(function (){
+                $('html, body').animate({
+                    scrollTop: $(".axis-panel-title.plot").offset().top -20
+                }, 1000);
+            });
+        });
+
+
+
+    $("#detect-table-format-form").submit(function (e) {
+    // preventing from page reload and default actions
+    e.preventDefault();
+    // serialize the data for sending the form data.
+    var serializedData = $(this).serialize();
+    $('.loading-spinner').show();
+    // make POST ajax call
+    $.ajax({
+        type: 'POST',
+        url: "{% url 'project1:auto_detect_data' %}",
+        data: serializedData,
+        success: function (response) {
+            
+          // Response here can Contain the stringified changed data when
+          // you implement the change datatype POST
+          $('.loading-spinner').hide();
+            // 1. clear the form.
+            $("#detect-table-format-form").trigger('reset');
+
+            console.log('\n response: ', response)
+            // SUCCESS FEEDBACK
+            // copy this pipeline to revert entire table to original modded_rows
+            let header_len = response['original_dtypes_values_readable_length']
+            let str_modded_rows = response['str_modded_rows'];
+            let dtypes = response['new_dtypes_values_readable']
+            let headers = response['headers'];
+            let select_options = response['select_options'];
+
+            for (let h=0; h < header_len; h++) {
+              let current_header = headers[h];
+              
+              
+              // change the dropdown  
+              let head = current_header.replace(/\s/g, '')
+              
+              let associated_dropdown = document.querySelector(
+                                        '.header'+ h + '-dropdown'
+                                        );
+              let dtype_readable = dtypes[current_header];
+              let select_option_index = select_options.indexOf(dtype_readable);
+              
+              associated_dropdown.options[select_option_index].selected = 'selected';
+
+              let target_cells = document.querySelectorAll (
+                                '.on-page .resizable-table-vals-'
+                                + h
+                                + ' p');
+
+              for(let row_num = 0; row_num < target_cells.length; row_num++) {
+                  target_cells[row_num].innerHTML = str_modded_rows[row_num][current_header];
+                  target_cells[row_num].style['background-color'] = '#81ecec';
+                  setTimeout(() => {
+                    target_cells[row_num].style['background-color'] = 'white';
+                  }, 1000);
+                }
+
+
+            }
+
+            $('.format-success-text').css("opacity", "1");
+            setTimeout(function(){
+              $('.format-success-text').css("opacity", "0");
+            }, 5000);
+                
+            // $('span.update-success-msg').css("opacity", "1");
+
+
+            // setTimeout(function(){
+            //     $('span.update-success-msg').css("opacity", "0");
+            // }, 3000);
+            // console.log('\n >> : \n', response['status']);
+            
+        },
+
+        error: function (response) {
+            // alert the error if any error occured
+
+            console.log('error occured! :\n', response);
+            
+        }
+      })
+  });
+  </script>

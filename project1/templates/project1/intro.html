@@ -1,0 +1,125 @@
+{% extends "app1/base.html" %}
+
+{% load static %}
+{% static "csv_files/data2.csv" %}
+
+{% block children %}
+
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<script src="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+
+<!-- Color scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- drsg scroll -->
+<script src="{% static 'app1/dragscroll-master/dragscroll.js' %}"></script>
+
+
+
+<div class="project-page-wrapper">
+    <div class="intro-header">
+        <p class="header-text">Welcome to <span style="color: #FF7F0E; font-style: italic;">Simple</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">GRAPHER</span>
+        </p>
+    </div>
+
+
+    <div class="intro-content intro-content1">
+        <p><span style="font-weight: bold;color: #FF7F0E;font-style: italic;">Simple</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">GRAPHER</span>
+            is a tool that lets you generate quick graphs from data. </p>
+            <p>Just upload an Excel file that contains your data, then generate 
+                a graph of your choice based on the data you uploaded.
+        </p>
+            
+    </div>
+
+    <div class='intro-content intro-content2' style="margin-top: 5%; position: relative;
+        display: flex; justify-content: center;">
+
+        <input onclick="play_button_sound()" type="button" 
+            value="Click here to BEGIN" class="blue-button oversized-button shadowed-border2"
+            style="position: relative;">   
+        </input>
+    </div>
+    <audio id="button-audio" src="{% get_media_prefix %}beep-26.mp3"></audio>
+    <script>
+        function play_button_sound() {
+            var audio = document.getElementById("button-audio");
+            audio.play();
+            setTimeout(() => window.location.href = '/project1',
+            350);
+            
+        }
+    </script>
+
+
+    <div class='intro-content intro-content3' style="
+    
+    border-radius: 6px;
+    width: 95%;
+    box-shadow: 2px 3px 14px -6px #4a89bd9f;
+    margin-top: 8%;
+    padding: 1% 4% 1% 1%;">
+        <p style="font-weight: bold;">
+            Build tools
+        </p>
+
+        <div class="build-tools-card">
+            <div><img onclick="go_to_ref(this)" class="jquery-img build-tools-img" src="{% get_media_prefix %}jquery.png"></div>
+            <div><img onclick="go_to_ref(this)" class="trinity-img build-tools-img" src="{% get_media_prefix %}trinity.png"></div>
+            <div><img onclick="go_to_ref(this)" class="python-img build-tools-img" src="{% get_media_prefix %}python-logo.png"></div>
+                        
+        </div>
+
+        <div class="build-tools-card">
+            <div><img onclick="go_to_ref(this)" class="vs_code-img build-tools-img" src="{% get_media_prefix %}vs_code.png"></div>
+            <div><img onclick="go_to_ref(this)" class="ajax-img build-tools-img" src="{% get_media_prefix %}ajax.png"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    function go_to_ref(clicked_img) {
+        let class_name = clicked_img.classList[0];
+        let  url_redirect = ''
+        let a= document.createElement('a');
+        a.target= '_blank';
+        
+        if (class_name == "jquery-img") {
+            url_redirect = 'https://jquery.com/'
+        }
+        else if (class_name == "trinity-img") {
+            url_redirect = 'https://www.javascript.com/'
+        }
+        else if (class_name == "python-img") {
+            url_redirect = 'https://www.python.org/'
+        }
+        else if (class_name == "vs_code-img") {
+            url_redirect = 'https://code.visualstudio.com/'
+        }
+        else if (class_name == "ajax-img") {
+            url_redirect = 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started'
+        }
+        
+        a.href= url_redirect;
+        a.click();
+       
+    }
+</script>
+
+
+<script src="{% static 'app1/project1_javascript.js' %}"></script>
+
+{% endblock children %}
+
+
+
+

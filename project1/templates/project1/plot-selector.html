@@ -1,0 +1,635 @@
+{% load static %}
+<div class='plot-selector-container'>
+    <div class='axis-panel-title plot'>Select a Plot from Below:</div>
+    
+    <div class="plot-panel-flexible shadow-light">
+
+        <div class="plot-choice-panel" >
+            <div class="plot-grid-container">
+
+                <div class="BAR-CHART plot_grid_div first plot-select-highlighter">
+                    <img onclick="fire_ajax_select_chart(this)" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)" 
+                    class="BAR-CHART plot-select-img plot-select-highlighter" src="{% get_media_prefix %}bar_chart.png">
+                    
+                </div>
+
+                <div class="LINE-CHART plot_grid_div second plot-select-highlighter ">
+                    <img onclick="fire_ajax_select_chart(this)" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)" 
+                    class="LINE-CHART plot-select-img plot-select-highlighter" src="{% get_media_prefix %}line_chart.jpg">
+                </div>
+
+                <div class="BAR-CHART plot_grid_div third plot-select-highlighter">
+                    <p onclick="fire_ajax_select_chart(this)" class="BAR-CHART plot-select-text plot-select-highlighter" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)">BAR CHART</p>
+                </div>
+
+                <div class="LINE-CHART plot_grid_div fourth  plot-select-highlighter">
+                    <p onclick="fire_ajax_select_chart(this)" class="LINE-CHART plot-select-text plot-select-highlighter" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)">LINE CHART</p>
+                </div>
+
+                <div class="MULTI-LINE-CHART plot_grid_div fifth plot-select-highlighter ">
+                    <img onclick="fire_ajax_select_chart(this)" id='MULTI-LINE-CHART' onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)" 
+                    class="MULTI-LINE-CHART plot-select-img plot-select-highlighter" src="{% get_media_prefix %}multi_line_chart.png">
+                </div>
+
+
+                <div class="PIE-CHART plot_grid_div plot-select-highlighter ">
+                    <img onclick="fire_ajax_select_chart(this)" id='PIE-CHART' onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)" 
+                    class="PIE-CHART plot-select-img plot-select-highlighter" src="{% get_media_prefix %}pie_chart.jpg">
+                </div>
+
+
+                <div class="MULTI-LINE-CHART plot_grid_div ">
+                    <p onclick="fire_ajax_select_chart(this)" class="MULTI-LINE-CHART plot-select-highlighter plot-select-text" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)">MULTI-LINE CHART</p>   
+                </div>
+                <div class="PIE-CHART plot_grid_div ">
+                    <p onclick="fire_ajax_select_chart(this)" class="PIE-CHART plot-select-highlighter plot-select-text" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)">PIE-CHART</p>   
+                </div>
+
+
+                <div class="HISTOGRAM plot_grid_div plot-select-highlighter ">
+                    <img onclick="fire_ajax_select_chart(this)" id='HISTOGRAM' onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)" 
+                    class="HISTOGRAM plot-select-img plot-select-highlighter" src="{% get_media_prefix %}histogram.png">
+                </div>
+
+
+                 <div class="SCATTERPLOT plot_grid_div plot-select-highlighter ">
+                    <img onclick="fire_ajax_select_chart(this)" id='SCATTERPLOT' onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)" 
+                    class="SCATTERPLOT plot-select-img plot-select-highlighter" src="{% get_media_prefix %}scatter_plot.png">
+                </div>
+
+
+                <div class="HISTOGRAM plot_grid_div ">
+                    <p onclick="fire_ajax_select_chart(this)" class="HISTOGRAM plot-select-highlighter plot-select-text" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)">HISTOGRAM</p>   
+                </div>
+                <div class="SCATTERPLOT plot_grid_div ">
+                    <p onclick="fire_ajax_select_chart(this)" class="SCATTERPLOT plot-select-highlighter plot-select-text" onmouseover='img_text_hover(this)' onmouseout="img_text_unhover(this)">SCATTERPLOT</p>   
+                </div>
+
+
+
+            </div>
+
+            
+        </div>
+
+
+
+        <div class="axis-choice axis-choice-element selector-associated-panel hidden-axis-choice">
+            
+            <div class="axis-panel-title xy axis-panel-border axis-choice-element">
+                <p class="axis-choice-element"> Select Columns for X and Y axis</p>
+            </div>
+            <div class="axis-choice-element axis-inner-panel-wrap">
+                                
+                <div class="axis-choice-element axis-card x-card axis-panel-border">
+                    <div class="axis-choice-element axis-subtitle">
+                        <p class="axis-choice-element ">Select Column for X-Axis</p>
+                    </div>
+
+                    <p class="axis-choice-element axis-card-text">list of valid selectable columns:</p>
+                    
+                    <div class="axis-choice-element axis-choice-box flashes">
+                        <form class="axis-choice-element">
+                           
+                        </form>
+                    </div>
+                </div>
+
+                <!-- second card -->
+                <div class="axis-choice-element axis-card y-card axis-panel-border">
+                    <div class="axis-choice-element axis-subtitle">
+                        <p class="axis-choice-element ">Select Column for Y-Axis</p>
+                        
+                    </div>
+                    <p class="axis-choice-element axis-card-text">list of valid selectable columns:
+                        <br>*Numerical Data will be aggregated to 'SUM' when necessary
+                    </p>
+                   
+                    <div class="axis-choice-element axis-choice-box flashes">
+                        <form class="axis-choice-element">
+                            
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <button id="vizualize" 
+                class="btn btn-primary axis-generate-btn axis-choice-element"
+                onclick="generate_plot_fire_ajax()">
+                GENERATE PLOT</button>
+        </div>
+
+    </div>
+
+<!-- invisible forms that send ajax. link them up with whats being clicked -->
+<form id="select_chart_type_form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{select_chart_type_form.text_key}}
+    {{select_chart_type_form.text_value}}
+    <button class="BAR-CHART hidden-submit-btn" type="submit" onclick="stop_propag(this)"></button>
+    <button class="LINE-CHART hidden-submit-btn" type="submit" onclick="stop_propag(this)"></button>
+    <button class="MULTI-LINE-CHART hidden-submit-btn" type="submit" onclick="stop_propag(this)"></button>
+    <button class="PIE-CHART hidden-submit-btn" type="submit" onclick="stop_propag(this)"></button>
+    <button class="HISTOGRAM hidden-submit-btn" type="submit" onclick="stop_propag(this)"></button>
+    <button class="SCATTERPLOT hidden-submit-btn" type="submit" onclick="stop_propag(this)"></button>
+</form>
+
+
+<form id='select_axis_form'>
+    {% csrf_token %}
+    {{ select_axis_form.text_key }}
+    {{ select_axis_form.text_value }}
+    <button class="axis-form-button hidden-submit-btn axis-choice-element" type="submit" 
+            onclick="stop_propag(this)"></button>
+</form>
+
+</div>
+
+<!-- loaders -->
+<script>
+    if(($(window).width() + window_media_query_offset < 768)) {
+                setTimeout(()=>{
+                  $('.selector-associated-panel').height("0px");
+                }, 0);
+           }
+      else {
+        $('.selector-associated-panel').height("fit-content");
+        }
+</script>
+
+<script>
+    function img_text_hover(hovered_img) {
+        
+        let class_id = hovered_img.classList[0];
+        let text_elms = document.querySelectorAll('p.'+ class_id);
+        let images = document.querySelectorAll('img.'+ class_id);
+
+
+        text_elms.forEach( (text_elm) => {
+            // text_elm.style['font-size'] = '103%';
+            // text_elm.style['font-weight'] = 'bold';
+            if ( ! text_elm.classList.contains('bolded-font')) {
+                text_elm.classList.add('bolded-font')
+            }
+            
+        });
+        images.forEach((i)=> {
+            // i.style['transform'] = "scale(1.2)";
+            if ( ! i.classList.contains('scaled-up')) {
+                i.classList.add('scaled-up')
+            }
+        })
+
+       
+    }
+    
+    function img_text_unhover(hovered_img) {
+        let class_id = hovered_img.classList[0];
+        let text_elms = document.querySelectorAll('p.'+ class_id );
+        let images = document.querySelectorAll('img.'+ class_id)
+
+        
+        text_elms.forEach( (text_elm) => {
+            // text_elm.style['font-size'] = '100%';
+            // text_elm.style['font-weight'] = 'initial';
+            if ( ! $('div.'+class_id).hasClass('borderd_selected')) {
+                 text_elm.classList.remove('bolded-font')
+            }
+        });
+
+        images.forEach((i)=> {
+            // i.style['transform'] = "scale(1)"
+            if ( ! $('div.'+class_id).hasClass('borderd_selected')) {
+                i.classList.remove('scaled-up')
+            }
+        })
+
+       
+    }
+
+    
+
+</script>
+
+<!-- button triggers -->
+<script>
+    var multi_line_selected = false;
+
+    function stop_propag(clicked) {
+        event.stopPropagation();
+   }
+
+   
+
+    function fire_ajax_select_chart(clicked_elem) {
+        event.stopPropagation();
+        let class_id = clicked_elem.classList[0];
+        
+        
+        // VISUAL CHANGES
+        // unselect all previous
+        let all_previously_bordered = $('.borderd_selected');
+        all_previously_bordered.each(function(index) {
+            $(this).removeClass("borderd_selected");
+        });
+        $('.scaled-up').each(function(index){
+            $(this).removeClass('scaled-up');
+        });
+        $('.bolded-font').each(function(index){
+            $(this).removeClass('bolded-font');
+        });
+
+        // select clicked
+        let selected_to_bordered = $('div.'+class_id);
+        selected_to_bordered.each(function(index) {
+            
+            $(this).addClass("borderd_selected");
+        });
+        $('img.' + class_id).addClass('scaled-up');
+        $('p.' + class_id).addClass('bolded-font');
+        
+        // show side panel (axis-choice)
+        let selector_panel = $('.selector-associated-panel');
+        selector_panel.addClass('shown-axis-choice');
+        selector_panel.removeClass('hidden-axis-choice');
+
+       if(($(window).width() + window_media_query_offset <= 768)) {
+                selector_panel.height("fit-content");
+
+                $(document).ready(function (){
+                    $('html, body').animate({
+                        scrollTop: $(".axis-panel-title.xy").offset().top - 250
+                    }, 800);
+                    
+                });
+           }
+        
+        // side panel more effects
+        $('.axis-choice-box').addClass('flash-color');
+        
+        setTimeout( function(){
+            $('.axis-choice-box').removeClass('flash-color');
+        } , 500)
+
+
+
+        // class_id indicates the chart type
+        $('#select_chart_type_form #id_text_value').val(class_id);
+        $('#select_chart_type_form #id_text_key').val('Chart type');
+
+        if (class_id === "MULTI-LINE-CHART") {
+            multi_line_selected = true;
+        }
+        else {
+            multi_line_selected = false;
+        }
+
+        
+        let btn_to_submit = document.querySelector('button.'+class_id);
+        btn_to_submit.click();
+    }
+
+
+
+    function generate_plot_fire_ajax() {
+        let x_val = $(".x-card form input[name='optradio']:checked")[0]
+
+        let y_val = null
+        let y_values = []
+
+        let x_name = ''
+        x_name = x_val.id;
+
+        let y_name = ''
+
+        if (multi_line_selected===true){
+                $('.checkbox-choice input:checked').each(function() {
+                    y_values.push($(this).attr('name'));
+                });
+                y_name = JSON.stringify(y_values);
+            }
+        else {
+            y_val = $(".y-card form input[name='optradio']:checked")[0]
+
+            if (y_val !== undefined && 
+                $(".y-card form input[name='optradio']:checked").length>0){
+                y_name = y_val.id.substring(2,);
+            }
+            
+            // y_name = JSON.stringify(y_name);
+            }     
+        
+        
+        // set values
+        $('#select_axis_form #id_text_value').val(y_name);
+        $('#select_axis_form #id_text_key').val(x_name);
+
+        // fire button to submit
+        $('#select_axis_form .axis-form-button').click();
+    }
+
+// de-clicks
+
+$('.plot-grid-container').click(function(event){
+    // main js function
+    
+    let excluded = $('.plot-grid-container *').find(event.target);
+    
+
+    // only deselect when the click is not a descendant of plot-grid-container
+    if (excluded.length == 0) {  
+        let list_of_jquery_elements = $('.plot-grid-container .borderd_selected');
+        deselect(list_of_jquery_elements);
+        list_of_jquery_elements = $('.plot-grid-container .bolded-font');
+        deselect(list_of_jquery_elements);
+        list_of_jquery_elements = $('.plot-grid-container .borderd_selected');
+        deselect(list_of_jquery_elements);
+    }
+
+});
+
+// de-click events that de-highlights, de-selects, etc....
+function deselect(list_of_jquery_elements) {
+    if (list_of_jquery_elements.length > 0) {
+        list_of_jquery_elements.each(function(i){
+            $(this).removeClass('bolded-font');
+            $(this).removeClass('scaled-up');
+            $(this).removeClass('borderd_selected');
+        });
+    }
+}
+
+function element_click_deselect(e, list_of_jquery_elements) {
+    
+    if (e.target.classList.contains('plot-select-highlighter')
+        || e.target.classList.contains('axis-choice-element')) {
+        return
+    }
+    else {
+        if(list_of_jquery_elements && list_of_jquery_elements.length > 0){
+            console.log('deselect occurred!!')
+            deselect(list_of_jquery_elements);
+        }
+
+        if(list_of_jquery_elements && list_of_jquery_elements.length > 0){
+            list_of_jquery_elements = $('.plot-grid-container .bolded-font');
+            deselect(list_of_jquery_elements);
+        }
+        if(list_of_jquery_elements && list_of_jquery_elements.length > 0){
+            list_of_jquery_elements = $('.plot-grid-container .borderd_selected');
+            deselect(list_of_jquery_elements);
+        }
+
+    }
+
+    
+}
+
+$(document).on('click','body *',function(event){
+//  $(this) = your current element that clicked.
+// additional code
+    let list_of_jquery_elements = $('.plot-grid-container .borderd_selected');
+    element_click_deselect(event, list_of_jquery_elements);
+    // hide the side panel?
+    let selector_panel = $('.selector-associated-panel');
+    if (event.target.classList.contains('axis-choice-element')) {
+        return
+    }
+    else {
+        if (selector_panel.hasClass('shown-axis-choice')) {
+        selector_panel.removeClass('shown-axis-choice');
+        selector_panel.addClass('hidden-axis-choice');
+           if(($(window).width() + window_media_query_offset <= 768)) {
+                setTimeout(()=>{
+                    selector_panel.height("0px");
+                }, 700);
+           }
+       }
+    }    
+
+})
+
+
+</script>
+
+
+<!-- AJAX SCript -->
+<script>
+    $("#select_chart_type_form").submit(function (e) {
+    // preventing from page reload and default actions
+    e.preventDefault();
+    // serialize the data for sending the form data.
+    var serializedData = $(this).serialize();
+
+    $('.loading-spinner').show();
+    // make POST ajax call
+    $.ajax({
+        type: 'POST',
+        url: "{% url 'project1:select_chart_type' %}",
+        data: serializedData,
+        success: function (response) {
+            
+          // Response here can Contain the stringified changed data when
+          // you implement the change datatype POST
+            
+            // 1. clear the form.
+            $("#select_chart_type_form").trigger('reset');
+
+            console.log('\n\n response: ', response)
+            console.log(response['chart_type'])
+            // SUCCESS FEEDBACK
+            $('.loading-spinner').hide();
+
+            // update side panel:
+            // 1- show available x-y-axes based on chart (view should send us respones)
+            // 2- show START button
+            // 3- Any other visuals (toggle classes for elems inside panel?)
+            
+            
+            let allowed_x = JSON.parse(response['allowed_x_columns']);
+            let allowed_y = JSON.parse(response['allowed_y_columns']);
+            let allowed_x_types = JSON.parse(response['allowed_x_types']);
+            let allowed_y_types = JSON.parse(response['allowed_y_types']);
+
+            let chart_type = response["chart_type"];
+            
+            let x_card_form = $('.x-card form');
+            let y_card_form = $('.y-card form');
+            
+
+            // destroy input choices, reset visibility
+            $('.x-card form').empty();
+            $('.y-card form').empty();
+            // $('.y-card form').css({'opacity': '1'});
+
+
+            $('#vizualize').prop("disabled", false);
+            $('#vizualize').css({"cursor": "pointer"});
+
+            // visual customization based on chart-type
+            if (chart_type === "PIE-CHART") {
+                $('.x-card .axis-subtitle p').text ("Select Column for Pie Categories");
+                $('.y-card .axis-subtitle p').text ("Select Column to represent Pie Angles");
+            }
+            else {
+                $('.x-card .axis-subtitle p').text ("Select Column for X-Axis");
+                $('.y-card .axis-subtitle p').text ("Select Column for Y-Axis");
+            }
+            
+
+
+            let ind = 0;
+            
+            allowed_x.forEach(function(x_col){
+                let checked = '';
+                let x_col_mod = '';
+                if(x_col.indexOf(' ') >= 0) {
+                    x_col_mod = x_col.replace(/ /g,"_");
+                }
+                if (ind == 0) {
+                    checked = 'checked';
+                }
+                else {
+                    checked = '';
+                }
+                let elm = `<label class="axis-choice-element">
+                              <input id="${x_col}" class="${x_col_mod} axis-choice-element" 
+                              type="radio" name="optradio" ${checked}>
+                              ${x_col}</input>
+                            </label>`
+                $('.x-card form').append(elm);
+
+                ind ++;
+            });
+        
+            ind = 0;
+            
+            allowed_y.forEach(function(y_col){
+                let checked = '';
+                let y_col_mod = '';
+                if(y_col.indexOf(' ') >= 0) { // deprecated
+                    y_col_mod = y_col.replace(/ /g,"_");
+                }
+                if (ind == 0) {
+                    checked = 'checked';
+                }
+                else {
+                    checked = '';
+                }
+
+                let elm = '';
+                if (multi_line_selected===true){
+                    elm=`<div class="${y_col_mod}-checkbox checkbox-choice axis-choice-element">
+                        <input class="${y_col_mod} axis-choice-element"
+                        type="checkbox" id="y-${y_col}" name="${y_col}" value="${y_col}">
+                         <label class="axis-choice-element" for="y-${y_col}"> ${y_col} </label>
+                         </div>`
+                }
+                else {
+                    elm = `<label class="axis-choice-element">
+                              <input id="y-${y_col}" class="${y_col_mod} axis-choice-element" type="radio" name="optradio" ${checked}>
+                              ${y_col}</input>
+                            </label>`
+                }
+                if(chart_type === "HISTOGRAM") {
+                    $('.y-card').css({'opacity': '0'});
+                }      
+                else {
+                    $('.y-card form').append(elm);
+                    $('.y-card').css({'opacity': '1'});
+                }  
+               
+                ind ++;
+            });
+            
+
+            // case for when no valid columns exist:
+            if (allowed_x.length <= 0) {
+                let err= '';
+                err = allowed_x_types.join(', ');
+                let add_error = `Acceptable X-axis data for ${chart_type}: ${err}`;
+
+                let error = `<p class="error-msg">No Valid X-Axis columns
+                    detected. Please make sure you are selecting the right
+                    graph for the columns in your data. Alternatively, you
+                    can change the data types of your columns.
+                    ${add_error}</p>`
+                $('.x-card form').append(error);
+                $('#vizualize').prop("disabled",true);
+                $('#vizualize').css({"cursor": "not-allowed"});
+
+            }
+            
+            if (allowed_y.length <= 0) {
+                let err= '';
+                err = allowed_y_types.join(', ');
+                let add_error = `Acceptable Y-axis data for ${chart_type}: ${err}`;
+
+                let error = `<p class="error-msg">No Valid Y-Axis columns
+                    detected. Please make sure you are selecting the right
+                    graph for the columns in your data. Alternatively, you
+                    can change the data types of your columns. Y-Axis must be 
+                    a numeric value.
+                    ${add_error}</p>`
+                $('.y-card form').append(error);
+                $('#vizualize').prop("disabled",true);
+                $('#vizualize').css({"cursor": "not-allowed"});
+            }
+
+            
+
+
+
+        // success end
+        } ,
+
+        error: function (response) {
+            // alert the error if any error occured
+            console.log('error occured! :\n', response);
+            
+        }
+      })
+  });
+
+
+
+
+$("#select_axis_form").submit(function (e) {
+// preventing from page reload and default actions
+e.preventDefault();
+// serialize the data for sending the form data.
+var serializedData = $(this).serialize();
+
+$('.loading-spinner').show();
+
+// make POST ajax call
+$.ajax({
+    type: 'POST',
+    url: "{% url 'project1:generate_plot' %}",
+    data: serializedData,
+    success: function (response) { 
+        // go to main_viz
+        $('.loading-spinner').hide();
+        console.log('\n now we go to the Main Viz');
+
+        console.log('\n response from generate_plot: ', response);
+        let url_redirect = response['url_redirect'];
+        if (url_redirect) {
+            window.location.href = url_redirect;
+        }
+    },
+    error: function (response) {
+        // alert the error if any error occured
+        console.log('error occured! :\n', response);
+        console.log(response['responseText'])
+        alert(
+            'An Error has occurred! Please make sure you select the right columns for the slected graphs, and that data is formatted');
+        location.reload();
+    }   
+    })
+});
+
+
+</script>

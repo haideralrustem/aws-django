@@ -1,0 +1,268 @@
+c:/Users/xario/PycharmProjects/django_app/venv/Scripts/Activate.ps1 ;
+cd haider_site;
+python manage.py runserver;
+
+
+venv/Scripts/Activate.ps1;cd haider_site;python manage.py runserver;
+
+cd django_app;venv/Scripts/Activate.ps1; cd haider_site;python manage.py runserver;
+
+
+
+
+______ ORM QUERYSETS ______
+
+python manage.py shell
+
+Profile.objects.get(user__username='keems')
+
+MyCsvData.objects.filter(field1='john', field2='Sample title').exists()
+
+SomeModel.objects.filter(id=id).delete()
+
+
+
+Heroku
+
+I had the same issue. Just make sure that you initialized the git repo inside the django project root. That way, your .git folder, .gitignore file, manage.py, requirements.txt, etc.. are on the same hierarchical level.
+
+
+
+
+function bar_graph (data, graph_title='default_title', x_title='x-label', 
+                    y_title='y_label', trend_line=false, bar_mouseover_animation=false,
+                    line_mouseover_animation=false, 
+                    bar_tooltip=false,
+                    line_tooltip=false,
+                    mousein_tuple={key:'', value:''}, mouseout_tuple={key:'', value:''},
+                    line_mousein_tuple={key:'', value:''} , 
+                    line_mouseout_tuple={key:'', value:''},
+                    ) 
+    {
+
+    var data_fields = [];
+    
+    for (var field in data[0]) {
+        // check if property not inherited
+        if (Object.prototype.hasOwnProperty.call(data[0], field)) {
+            data_fields.push(field);
+        }
+    }
+
+
+    width = 300
+    height = 300
+    margin = 200
+
+    var svg = d3.select("#svg-container").append("svg")
+    .attr("width", width + margin)
+    .attr("height", height + margin)
+
+    // range is possible values
+    var xScale = d3.scaleBand().range ([0, width]).padding(0.4);
+    var x2Scale =  d3.scaleBand().range ([0, width]);
+
+    var yScale = d3.scaleLinear().range ([height, 0]);
+    
+
+
+    var g = svg.append("g")
+               .attr("transform", "translate(" + 150 + "," + 50 + ")");
+    
+    // we  provide our domain values to the x and y scales    
+    xScale.domain(data.map(function(d) { return d[data_fields[0]]; }));
+    yScale.domain([0, d3.max(data, function(d) { return  d[data_fields[1]] ; })]);
+
+
+    g.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale));
+
+    g.append("g")
+    .call(d3.axisLeft(yScale).tickFormat(function(d){
+        // format the ticks
+        return "" + d;
+    }))  // number of ticks
+    .append("text")
+    .attr("y", 6)
+    .attr("dy", "0.71em")
+    .attr("text-anchor", "end")
+    .text("value");
+
+
+    // adding the bar
+    g.selectAll(".bar")
+    .data(data)
+    .enter().append("rect")
+    .attr("class", "bar")      
+    
+    // specify the x position
+    .attr("x", function(d) { return xScale( d[data_fields[0]] ); })
+
+    // specify the y position
+    .attr("y", function(d) { return yScale( d[data_fields[1]] ); })
+
+    // bar width; the x-scale returns a calculated bandwidth
+    .attr("width", xScale.bandwidth())
+    //The height of the bar. This would be the height of the SVG minus the corresponding y-value
+    .attr("height", function(d) { return height - yScale( d[data_fields[1]] ); });
+
+    
+    var tooltip = d3.select("#svg-container")
+                .append("div")
+                .style("position", "absolute")
+                .style("visibility", "hidden")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style("padding", "10px")
+                .attr("class", "tooltip")
+                .text("I'm a circle!")
+                .html("<p>I'm a tooltip written in HTML</p>");
+
+    
+
+    if (trend_line === true) {
+        var valueline = d3.line()
+
+        .x( function(d) { return xScale(d[data_fields[0]]); })
+        .y( function(d) { return yScale(d[data_fields[1]]); });
+        
+        g.append("path")
+        .data([data])
+        .attr("class", "line")
+        .attr("d", valueline);
+    }
+
+
+    
+    
+
+
+    if ( bar_mouseover_animation === true ) {
+        g.selectAll(".bar")
+        .on("mouseover", function (d , i) {
+
+            //-> Coloring
+            d3.select(this).style(mousein_tuple.key , function(d) { 
+                return mousein_tuple.value });
+            d3.select(this)
+            .transition()     // adds animation
+            .duration(400)
+            .attr('width', xScale.bandwidth() );
+            
+
+            //-> Tooltip
+            if ( bar_tooltip===true ) {
+                return  tooltip.style("visibility", "visible");
+                }
+            
+            
+        })
+        .on("mousemove", function(event, d) {
+            if ( bar_tooltip===true ) {
+                        tooltip.html("value: " 
+                                    + d[data_fields[1]]);
+                       
+                        return tooltip.style("top", (event.pageY-50)+"px")
+                                      .style("left",(event.pageX-40)+"px")
+                                      .style("opacity", "0.8");
+                                    }
+                                })
+
+        //Add listener for the mouseout event
+        .on("mouseout", function (d, i) { 
+            d3.select(this).style(mouseout_tuple.key, function(d) { 
+                return mouseout_tuple.value });
+
+            d3.select(this)
+            .transition()     // adds animation
+            .duration(400)
+            .attr('width', xScale.bandwidth())
+            
+            // d3.selectAll('.highlight')
+            // .remove()
+            if ( bar_tooltip===true ) {
+                return tooltip.style("visibility", "hidden"); 
+                }
+        }) 
+    
+    } 
+
+
+    if ( line_mouseover_animation === true ) {
+        g.selectAll(".line")
+        .on("mouseover", function (d , i) {
+            
+            d3.select(this).style(line_mousein_tuple.key , function(d) { 
+                return line_mousein_tuple.value });
+
+            d3.select(this)
+            .transition()     // adds animation
+            .duration(400)
+            .attr('width', xScale.bandwidth() );
+
+            
+            
+        })
+
+        .on("mousemove", function(event, d) {
+                                
+                            })
+
+        //Add listener for the mouseout event
+        .on("mouseout", function (d, i) { 
+            d3.select(this).style(line_mouseout_tuple.key, function(d) { 
+                return line_mouseout_tuple.value });
+
+            d3.select(this)
+            .transition()     // adds animation
+            .duration(400)
+            .attr('width', xScale.bandwidth());
+
+            
+           
+        }) 
+    
+    } 
+
+
+    // add title
+    svg.append("text")
+   .attr("transform", "translate(100,0)")
+   .attr("x", 50)
+   .attr("y", 50)
+   .attr("font-size", "24px")
+   .text(graph_title)
+
+
+   // x axis title
+    g.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xScale))
+    .append("text")
+    .attr("y", height - 250)
+    .attr("x", width - 100)
+    .attr("text-anchor", "end")
+    .attr("stroke", "black")
+    .text(x_title);
+
+    // y axis title
+    g.append("g")
+    .call(d3.axisLeft(yScale)
+    .tickFormat(function(d){
+        return "" + d;
+    }).ticks(10))
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 1)
+    .attr("dy", "-5.1em") // horizental distance from axis
+    .attr("dx", "-8.2em") // vertical distance
+    .attr("text-anchor", "end")
+    .attr("stroke", "black")
+    .text(y_title);
+
+}
+
+

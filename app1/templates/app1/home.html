@@ -1,0 +1,163 @@
+
+{% extends "app1/base.html" %}
+{% load static %}
+
+{% block children %}
+<link rel="stylesheet" href="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+<script src="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+
+
+<div class="loading-spinner"></div>
+
+<div class="home-img-wrap">
+    
+    <!-- img goes here -->
+    <div class="welcome-text">
+        Welcome to my Analytical Projects showcase.<br>
+        
+    </div>
+
+    
+
+    
+    <div class="built-by-python" data-url="https://www.djangoproject.com/" 
+    onclick="navigateToUrl(this)">
+        <div class="built-by-python-img">
+            <img class="django-logo" src="{% get_media_prefix %}django_logo.png">
+        </div>
+       <div class="built-by-python-text">built by the Django Framework</div> 
+
+    </div>
+    
+</div>
+
+<!--& c:/Users/xario/PycharmProjects/django_app/venv/Scripts/Activate.ps1 ; cd haider_site ; python manage.py runserver-->
+<div class="home-wrap">
+    <h2 class="home-title"> Analytical Projects: </h2>
+    <p class="home-subtitle">A list of projects that are focused on computational analysis.</p>
+
+    <div class='card-container'>
+        <a href="{% url 'project1:intro' %}">
+        
+        <div class="card-wrap">
+
+            <div class="card-img">
+                <img class="card-img-photo" src="{% get_media_prefix %}simple_grapher_thumbnail.png">
+            </div>
+            <!-- -->
+            <div class="card-text-content">
+                <div class="card-text-title"><h4><p><span style="font-weight: bold;color: #FF7F0E;font-style: italic;">Simple</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">GRAPHER</span></h4></div>
+                <hr>
+                <div class="card-text-body">
+                    <p><span style="font-weight: bold;color: #FF7F0E;font-style: italic;">Simple</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">GRAPHER</span>
+                        is a tool that lets you generate quick graphs from data. </p>
+                        
+                </div>
+            </div>
+            
+        </div>
+
+        </a>
+    </div>
+
+        <hr>
+
+    <div class='card-container'>
+        <a href="{% url 'project2:intro' %}">
+            <div class="card-wrap">
+
+                <div class="card-img">
+                    <img class="card-img-photo" src="{% get_media_prefix %}text_analysis_thumbnail.png">
+                </div>
+                <!-- -->
+                <div class="card-text-content">
+                    <div class="card-text-title"><h4><span class="tcard-title-brand">Text Analyzer</span></h4></div>
+                    <hr>
+                    <div class="card-text-body"><p>Generates an analytical summary of any entered text</p></div>
+                </div>
+                
+            </div>
+        </a>
+    </div>
+
+    
+
+    <div class="container-vertical">
+    
+    <!-- to add a new card, create a row (houses two cards), then put it in .card-wrap-vertical -->
+        
+    <div class="row-vertical">
+        <div class="frame-limiter">
+            <div class="card-wrap-vertical hover-border">
+
+                <div class="card-img">
+                    <img class="card-img-photo" src="{% get_media_prefix %}simple_grapher_thumbnail.png">
+                </div>
+                <!-- -->
+                <div class="card-text-content">
+                    <div class="card-text-title">
+                        <h4><p><span style="font-weight: bold;color: #FF7F0E;font-style: italic;">Simple</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">GRAPHER</span></h4>
+                    </div>
+
+                    <hr>
+                    <div class="card-text-body">
+                        <p><span style="font-weight: bold;color: #FF7F0E;font-style: italic;">Simple</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">GRAPHER</span>
+                            is a tool that lets you generate quick graphs from data. </p>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    
+        <div class="frame-limiter ">
+            <div class="card-wrap-vertical hover-border">
+
+                <div class="card-img">
+                    <img class="card-img-photo" src="{% get_media_prefix %}text_analysis_thumbnail.png">
+                </div>
+                <!-- -->
+                <div class="card-text-content">
+                    <div class="card-text-title">
+                        <h4><span class="tcard-title-brand">Text Analyzer</span></h4>
+                    </div>
+                    <hr>
+                    <div class="card-text-body">
+                        <p>Generates an analytical summary of any entered text</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+
+    
+<script>
+    $(window).on ('load', function() {
+    $('.loading-spinner').hide();
+    
+  });
+
+  $('document').ready(function() {
+    $('.loading-spinner').hide();
+   
+  });
+</script>
+
+    
+
+
+
+{% endblock children %}

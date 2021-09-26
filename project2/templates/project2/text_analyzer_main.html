@@ -1,0 +1,412 @@
+{% extends "app1/base.html" %}
+
+{% load static %}
+{% static "csv_files/data2.csv" %}
+
+{% block children %}
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<link rel="stylesheet" href="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.theme.css' %}">
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<div class="loading-spinner"></div>
+
+
+
+
+<div id="text-analyzer-wapper">
+  <div class='txa txa-outer-wrap'>
+    <div class="guide-text">
+        To start analyzaing text, write or copy/paste 
+        a piece of text in the area below then click on the analyze text button:
+    </div>
+
+    <div class="txa-twin-wrapper switches-display">
+
+
+      <div class="txa-textarea-wrap">
+
+        <div class="alert-tooltip">
+          Please enter or paste some text in this area
+          <i></i>
+        </div>
+
+        <form id="u_form" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{u_form.text_value}}
+          
+          <label for="txa_textarea"></label>
+          <!-- <div contentEditable="true" class="txa_textarea" id="txa_textarea" ></div> -->
+
+
+          <div class="text-area-highlight-wrap">
+            <div class='highlight-overlay'></div>
+            <textarea class="txa_textarea" id="txa_textarea"></textarea>
+          </div>
+          
+          
+          <button class='hidden-submit-btn' 
+                                id="analyze_text_submit" 
+                                type="submit">G</button>
+        </form>
+
+        <div id="analyze-btn-wrap">
+          <button id="analyze-btn" class="blue-button-rev" 
+          onclick="analyzeText(this)">ANALYZE TEXT</button>
+
+          <button id="clear-btn" disabled
+          class="red-button-rev"
+          onclick="clearAnalysis(this)">CLEAR ALL</button>
+
+        </div>
+
+
+      </div>
+
+      <div class="txa-side-panel">
+        <div class="txa-side-panel-content">
+          <div class="txa-side-panel-title">Results:</div>
+          <div class="txa-results-container">
+            <div class="word_count"><p title="Number of words"
+              class="tooltip-owner">Word count: </p></div>
+            <div>
+              <p class="tooltip-owner">Frequency: </p>
+              <div id="my_dataviz"></div>
+            </div>
+            <div class="likely_topic">
+              <p class="tooltip-owner" title="Most likely general theme of the text.">General Subject: </p>
+            </div>
+            <div class="complexity_score">
+              <p class="tooltip-owner"  title="The higher the score, the more complex the text is (Using the Flesch Reading Formula).">
+                Complexity?</p>
+            </div>
+            <div class="word_cloud">
+              <p id="word_cloud_text" class="tooltip-owner"
+              title="Word Cloud is a visualization that summarizes the most frequent words that occur in a text. The bigger the word, the most frequent it is.">
+                Word Cloud
+              </p>
+              <img id="cloud_graph" src='' 
+              class="tooltip-owner"
+              title="Word Cloud is a visualization that summarizes the most frequent words that occur in a text. The bigger the word, the most frequent it is.">
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <hr>
+  
+  <div>
+
+    <div class="info-text">
+      
+      <p>The Text Analyzer employs the help of NLTK
+        <a href="https://www.nltk.org/" target="_blank">(Natural Language Toolkit)</a>
+        , which is a Natural Langauge Processing (NLP) library written in the Python 
+        programming language.
+       </p>
+       <p>
+         Text Analyzer also uses a Machine Learning model to try to guess the general Subject
+         of the entered text. The predictive model was trained using 
+         <a href="http://qwone.com/~jason/20Newsgroups/" target="_blank">The 20 Newsgroups data set</a>
+         , which is a dataset consisting of approximately 20,000 articles from different news 
+         categories.
+       </p>
+      
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+  var global_data = [];
+
+  $('#cloud_graph').removeClass('visible');
+  
+
+
+
+function analyzeText(this_btn) {
+    let text = $('#txa_textarea').val();
+    $('#id_text_value').val(text);
+    
+        
+    $('#analyze_text_submit').click();  // that will submit your form
+  }
+
+function clearAnalysis(this_btn) {
+    $('.txa-side-panel').removeClass('slides');
+    $('#id_text_value').val('');
+    let tx = '';
+    $("#txa_textarea").val(tx)
+    $('.highlight-overlay').html(tx);
+    // $('#clear-btn').attr('disabled', 'false');
+    this_btn.disabled = 'true';
+
+
+}
+
+
+
+</script>
+
+
+<script src="{% static 'app1/project2_javascript.js' %}"></script>
+
+<!-- tooltip -->
+<script>
+  $( function() {
+    $( ".tooltip-owner" ).tooltip();
+  } );
+  
+</script>
+
+
+<!-- flashing -->
+<script>
+$('.guide-text').addClass('flash-shadow-bordered ');
+
+setTimeout(()=>{ $('.highlight-overlay').addClass('flash-shadow-bordered ');}, 
+2500);
+
+setTimeout(()=>{ $('.guide-text').removeClass('flash-shadow-bordered ');}, 
+                              3000);
+
+setTimeout(()=>{ $('.highlight-overlay').removeClass('flash-shadow-bordered ');}, 
+4500);
+
+</script>
+
+
+
+<script>
+  function adjustDatavizScale() {
+    setTimeout( ()=> {
+      let panel_size = $('.txa-side-panel').width();
+      let scaling_factor = panel_size / 550;
+      let panel_left = $('.txa-side-panel').offset()["left"];
+      left_val = panel_left + 15;
+      let font_size = '14px';
+
+      let aspect_ratio = 1.15 ;
+      let width = panel_size-132;
+      let word_cloud_width = width+ 100
+            
+      if (window.innerWidth <= 1250) {
+        width = panel_size-60 ;
+        word_cloud_width = width+ 40
+      }
+      if (window.innerWidth <= 1000) {
+        width = panel_size-50 ;
+        word_cloud_width = width+ 30
+        
+      }      
+      if (window.innerWidth <= 800) {
+        width = panel_size-50;
+        word_cloud_width = width+ 20
+        
+      }
+
+      if (window.innerWidth <= 700) {
+        width = panel_size-40 ;
+        word_cloud_width = width+ 20
+        
+      }
+
+      if (window.innerWidth <= 480) {
+        width = panel_size-30 ;
+        word_cloud_width = width+ 20
+        
+      }
+
+      // console.log('window.innerWidth -> ', window.innerWidth);
+      // console.log('panel_size -> ' , panel_size)
+      // console.log('left_val -> ', left_val);   
+      
+      $('#cloud_graph').width(word_cloud_width );
+      wordFreq(global_data, w=width, h=width/aspect_ratio);
+      
+      
+    //   // console.log(scaling_factor);
+    //   $('#my_dataviz svg').css(
+    //   {"transform": `scale(${scaling_factor})`,
+        
+    //   }
+    //   )
+     } , 350);
+    
+  }
+</script>
+
+
+<!-- script for highlighting -->
+<script>
+  let t_text = $('#txa_textarea').val();
+  let t_font_size = $('#txa_textarea').css("font-size");
+
+</script>
+
+<script>
+
+$('#u_form').submit(function (e) {
+  // preventing from page reload and default actions
+  e.preventDefault();
+  let submitted_form = $(this);
+  // serialize the data for sending the form data.
+  var serializedData = $(this).serialize();
+
+  $('.loading-spinner').show();
+  // make POST ajax call
+  $.ajax({
+        type: 'POST',
+        url: "{% url 'project2:analyze_text' %}",
+        data: serializedData,
+        success: function (response) {
+            
+            // Response here can Contain the stringified changed data when
+            // you implement the change datatype POST
+              
+            // 1. clear the form.
+            //submitted_form.trigger('reset');
+
+            console.log('\n response on analyze_text', response)
+            console.log(response['text_value'])
+
+            // SUCCESS FEEDBACK
+            let word_cloud_url = response['word_cloud_url'];
+            let likely_topic = response['likely_topic'];
+            let complexity_score = response['complexity_score'];
+            let word_count = response['word_count'];
+            let frequency_graph_data = response['frequency_graph_data'];
+            let sliced_freq_graph_data = frequency_graph_data.slice(0, 6);
+            global_data = sliced_freq_graph_data;
+
+            console.log(likely_topic)
+
+            // ->  Manipulate DOM to show data
+            let prev_src = "{% get_media_prefix %}" + word_cloud_url;
+            imageObject = document.getElementById("cloud_graph");
+            // imageObject.style.display = 'inline-block';
+            imageObject.src = prev_src;
+            
+            $('.txa-side-panel').removeClass('slides');
+            $('.txa-side-panel').addClass('slides');
+
+            $('#cloud_graph').removeClass('visible');
+            $('#cloud_graph').addClass('visible');
+
+            $('span.emphasis-text').remove();
+
+            $('.likely_topic p').append(`<span class='emphasis-text'> ${likely_topic} </span>`);
+            $('.complexity_score p').append(`<span class='emphasis-text'> ${complexity_score.toFixed(1)}% </span>`);
+
+            $('.word_count p').append(`<span class='emphasis-text'> ${word_count} </span>`);
+            
+            console.log('\n', sliced_freq_graph_data);
+
+            wordFreq(sliced_freq_graph_data);
+            adjustDatavizScale();
+
+
+            $('#clear-btn').removeAttr('disabled');
+          
+            $('.loading-spinner').hide();
+
+            
+            // -> trigger the GET Request here if needed            
+              
+          },
+          error: function (response) {
+              // alert the error if any error occured
+
+              console.log('>> error occured in analyze_text! :\n', response);
+              console.log(response["responseJSON"]);
+              console.log(response["responseJSON"]["text_value"]);
+              console.log(response["responseJSON"]["msg"]);
+              console.log(typeof(response["responseJSON"]["text_value"]));
+              console.log((response["responseJSON"]["text_value"].length));
+
+              let text_val = response["responseJSON"]["text_value"];
+
+              console.log(text_val.length);
+
+              if (text_val.length == 0) {
+                
+                $('.alert-tooltip').addClass('visible');
+                $('.alert-tooltip').addClass('show');
+
+
+                setTimeout(function(){
+                  $('.alert-tooltip').removeClass('show');
+                }
+                , 2000)
+
+                setTimeout(function(){
+                  $('.alert-tooltip').removeClass('visible');
+                }
+                , 3000)
+
+
+              }
+
+              $('.loading-spinner').hide();
+              
+          }
+      });
+  });
+
+</script>
+
+
+<!--  Scripts for Resizing window  -->
+<script> 
+
+  window.addEventListener('resize', function(event) { // on resize
+    adjustDatavizScale();
+  }, true);
+
+</script>
+
+
+
+
+
+<script>
+    $(window).on ('load', function() {
+      $('.loading-spinner').hide();
+      $('.table-outer-wrap').css('opacity', '1');
+    });
+  
+    $('document').ready(function() {
+      $('.loading-spinner').hide();
+     
+    });
+  
+   
+</script>
+
+  
+  
+  
+  
+  
+  
+  {% endblock children %}

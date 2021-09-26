@@ -1,0 +1,94 @@
+
+{% extends "app1/base.html" %}
+{% load static %}
+{% block children %}
+<div class="about-me-wrap">
+    <h1  class="home-title about-title"> About Me</h1>
+    
+    <div class="about-me-card">
+        <div class="about-me-pic">
+            <img src="{% get_media_prefix %}haider_smile_image2.jpg">
+        </div>
+        <div class="about-me-text">
+            <p><span></span> My name is Haider AL. 
+                <br>
+                I am a programmer who 
+                has knowledge in web technologies such HTML, CSS, JQuery and JavaScript.
+            </p>
+            <p>I mean I built this site after all (haha).</p>
+            <p>I also like to apply my technical knowledge (especially the Python language) in the field of data analytics.</p>
+            <p>I have a master's degree in informatics from the University of Texas Health Science Center at Houston, Texas.</p>
+            <p>This site serves as a showcase to the analytical programming projects that I built.</p>
+
+            <p>Don't hesitate to contact me!</p>
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="contact-card">
+        <div>
+           <div id="x" class="contact-container" >
+        <div id="contMain">  
+        <div class="row pl-4 pb-4">
+                <div class="col-xs">
+                <h3 class="cool-text">Contact Info:</h3>
+          
+          
+          <p>2630 Bissonnet St. Apt 4201 , Houston, Texas, 77005</p>
+          <p>Phone: +1 (832)249-0063 </p>
+          <p>Work: +1 (713) 486-5100</p>
+          <p>Email: haideralrustem@yahoo.com </p>
+        </div>
+    </div>
+  </div>
+
+
+    <div class="social-contact-wrap" >
+        
+            <div class="resumeText">
+                <h4 class="text-gp">Connect with me through Social Media: </h4>
+            </div>
+        
+            <div class="social-media-panel-outer">
+            <div class="social-media-panel">
+                <div id="linkedinDiv" class="social-media-pic">
+                <a href="https://www.linkedin.com/in/haider-al-rustem-32010515a/" target="_blank" class="image-wrapper-a">
+                    <img  id="linkedin"  src="{% get_media_prefix %}linkedin_fill.png">
+                
+                </a>
+                <p class="text-gp social-media-text">Linkedin</p>
+                </div>
+                <div id="facebookDiv" class="social-media-pic">
+                <a href="https://www.facebook.com/hydar.ali.92" target="_blank" class="image-wrapper-a">
+                    <img id="facebook" class="social-media-pic" src="{% get_media_prefix %}facebook_fill.png">
+                    
+                </a>
+                <p class="text-gp social-media-text">Facebook</p>
+                </div>
+
+                <div id="githubDiv" class="social-media-pic">
+                    <a  href="https://github.com/haideralrustem" target="_blank" class="image-wrapper-a">
+                        <img id="facebook" class="social-media-pic" src="{% get_media_prefix %}github_fill.png">
+                        
+                    </a>
+                    <p class="text-gp social-media-text">Github</p>
+                </div>
+        
+        
+            </div>
+        
+            </div>
+        </div>
+    </div>
+            </div>
+</div>
+    
+</div>
+
+
+{% endblock children %}
+

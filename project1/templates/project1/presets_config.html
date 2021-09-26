@@ -1,0 +1,545 @@
+{% extends "app1/base.html" %}
+
+{% load static %}
+{% static "csv_files/data2.csv" %}
+
+{% block children %}
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+<script src="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+
+
+<div class="loading-spinner"></div>
+
+
+
+<div class="project-page-wrapper">
+
+    <div class="intro-header">
+      <p class="header-text">Welcome to <span style="color: #FF7F0E; font-style: italic;">Simple</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">GRAPHER</span>
+      </p>
+    </div>
+    
+    <div class="file-uploader-title"><p>Excel File Upload:</p></div>
+
+    <div class="file-uploader">
+        <form id="data-file-uploader" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <input class='' type="file" name="uploaded_file" accept=".csv, .txt, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+            <input
+             class="blue-button" onclick="upload_file_click()"  type="submit" name="file-upload-submit" value="Upload File" />
+        </form>
+
+        
+
+        <span class="tooltiptext">
+          <p>
+          Choose an Excel or CSV file to upload your data here!
+          </p>
+          
+         </span>
+
+    </div>
+
+    {% if uploaded_file %}
+    <div class="file-name-indicator">
+      <p>
+       Currently viewing : {{ uploaded_file }}     
+      </p>
+    </div>
+    {% endif %}
+
+
+
+    <p> Supported formats: xlsx/ xls / csv / txt</p>
+    
+    {% if uploaded_file == 'no file uploaded yet' %}
+    <script>  
+    let cleaned_header;
+    if ($(window).width() > 700) {
+
+    $('.file-uploader .tooltiptext').css("opacity", "1");
+    setTimeout(function(){
+        $('.file-uploader .tooltiptext').css("opacity", "0");
+      }, 5000);
+    }
+    else {
+        $('.file-uploader .tooltiptext').css("width", "0px");
+      }
+    </script>
+    {% endif %}
+         
+    
+
+    
+    {% if uploaded_file and rows %}
+   
+    <div class="on-page-file-viewer">
+        
+
+        <div class="on-page-file-viewer bordered">
+            
+            <div class=""> 
+                
+                <div class="table-outer-wrap">
+                    <div class='table-container on-page'>
+            
+                      <div class='help-text-wrap'>
+                        
+                        <div class="help-text-title">
+                          Uploaded Data Preview</div>
+            
+                        <p>Sowing only the first 100 rows.
+                          <br>When uploading excel files, the active sheet will be used</p>
+                        <p class="flashes">- Use the dropdowns below to change the data format of the columns: </p>
+                      </div>
+
+
+                    
+                      <div class="container_col">
+                        <div class='file-preview-modal-content on-page '>
+
+                          <form id="change-dtype-constant" class='change-dtype' 
+                          method="POST"  > 
+                          <!-- onsubmit='submit_dtype_change(this)' -->
+                              {% csrf_token %}
+                              {{ change_dtype_form.text_value }}
+                              {{ change_dtype_form.text_key }}
+                              <button class='hidden-submit-btn' 
+                              id="change-dtype-btn-constant" 
+                              type="submit">G</button>
+                          </form>
+
+                            {% if headers %}
+                            <div class='dtype-change-row-wrap'>
+                              <div class="divRow dtype-change-row">
+                                  {% for header, dtype  in original_dtypes_values_readable.items %}
+                                  <div id="resizeable-table-{{forloop.counter0}}" 
+                                      class="divCell resizable-table  stylized-table-cell dtype-selector">
+                                      
+                                      <div>
+                                          <p> {{ header }}: </p> 
+
+                                                                                
+                                        <select class="header{{forloop.counter0}}-dropdown" name="{{header}}" onchange="submit_dtype_change(this)">
+
+                                          <script> 
+                                            // cleaned_header = '{{header}}'.replace(/\s/g, '')
+                                            // cleaned_class = cleaned_header + '-dropdown';
+                                            // $('select').addClass(cleaned_class);
+                                            // $('select').attr('name', cleaned_header);
+
+                                          </script>
+
+                                          <option class="Decimal number" value = "Decimal number" {% if 'Decimal number' == dtype %}selected{% endif %}> 
+                                            Decimal number </option> 
+                                        <option class = "Whole number" value = "Whole number" {% if 'Whole number' == dtype %}selected{% endif %}>
+                                            Whole number </option>
+                                        <option class = "Text" value = "Text" {% if 'Text' == dtype %}selected{% endif %}> 
+                                            Text </option>  
+                                        <option class = "Date" value = "Date" {% if 'Date' == dtype %}selected{% endif %}> 
+                                          Date </option>
+                                        <option class = "Time" value = "Time" {% if 'Time' == dtype %}selected{% endif %}>
+                                            Time </option>  
+                                        <option class = "Time period" value = "Time period" {% if 'Time period' == dtype %}selected{% endif %}>
+                                            Hours </option>  
+                                        </select>
+                                          
+                                      </div>                        
+                                      
+                                  </div>
+                                  {% endfor %}
+                              </div>
+                            </div>
+                            {% endif %}
+
+                            
+
+            
+                          {% if rows %}
+                          <form id="data-preview-table-onpage" class="data-preview-table">
+                            <div class="divTable">
+
+                              <!-- {% if headers %}
+                              <div class="headRow">
+                                {% for header in headers %}
+                                 <div id="" 
+                                      class="divCell resizable-table-vals-{{forloop.counter0}} stylized-table-cell"
+                                     >
+                                      <p>{{header}}</p>
+                                      
+                                  </div>
+                                {% endfor %}
+                              </div>
+                              {% endif %} -->
+                            
+
+                            
+
+                            
+                            {% for row in str_modded_rows %}
+                              {% if forloop.counter0 < 100 %} 
+                              <div class="divRow">
+                                    {% for field, val in row.items %}
+                                      <div 
+                                      class="divCell resizable-table-vals resizable-table-vals-{{forloop.counter0}} stylized-table-cell">
+                                      <p>{{ val }}</p>
+                                      </div>
+                                    {% endfor %}
+                              </div>
+                              {% endif %}
+                            {% endfor %}
+                             
+                             
+                 
+                            </div>
+            
+                          </form>
+                          {% endif %}
+                            
+                            
+                        </div>
+
+                      </div>
+                      
+                    
+                    </div>      
+            
+                  </div>
+            </div>
+            
+        </div>
+      <hr class='shadow-divider' style="width: 73vw; margin-left: 1%;">
+    </div>
+
+
+   
+
+    <script>
+        var window_media_query_offset = 17;
+        
+
+        document.querySelector('p.flashes').style['background-color'] = '#55efc4';
+        document.querySelector('p.flashes').style['font-style'] = 'italic';
+        document.querySelector('p.flashes').style['font-weight'] = 'bold';
+
+              setTimeout(()=>{
+                document.querySelector('p.flashes').style['background-color'] = 'white';
+                // document.querySelector('p.flashes').style['font-style'] = 'initial';
+                
+              }, 3000);
+    
+        
+        
+    </script>
+
+    {% endif %}
+
+    
+    <!-- ------------- -->
+    
+    {% if  uploaded_file and rows%}
+    <div  class=" format-choices-outwrap">
+      {% include 'project1/format_choices.html' %}
+    </div> 
+    <hr class='shadow-divider' style="width: 73vw; margin-left: 1%;">
+
+    <div class="plot-selector-wrap">
+      {% include 'project1/plot-selector.html' %}
+    </div>
+    
+    <script>
+
+      if ($(window).width() > 700){
+        $('.format-choices-wrap .tooltiptext').css("opacity", "1");
+        setTimeout(function(){
+            $('.format-choices-wrap .tooltiptext').css("opacity", "0");
+          }, 5000);
+      }
+      else {
+        $('.format-choices-wrap .tooltiptext').css("width", "0px");
+      }
+      
+
+    </script>
+    {% endif %}
+    <!-- ------------- -->
+
+    <div>
+        {% include 'project1/file_preview_modal.html' %}
+    </div>
+
+
+    
+
+    <!-- <a href="{% url 'project1:main_page' %}" class="btn btn-primary">go to testing</a> -->
+    
+</div>
+
+
+
+
+
+<script>
+    
+    window.addEventListener('resize', function(event) {
+      $('#data-preview-table-onpage').width($('.dtype-change-row').width());
+      if(($(window).width() + window_media_query_offset < 768)) {
+                setTimeout(()=>{
+                  $('.selector-associated-panel').height("0px");
+                }, 0);
+           }
+      else {
+        $('.selector-associated-panel').height("auto");
+      }
+    }, true); 
+    // 
+
+    $( document ).ready(function(){
+    footer = document.querySelector('.footer');
+    
+    footer.style.top = (window.screen.height - footer.offsetHeight) + "px";
+    $('#id_text_value').val();
+    });
+    
+    // stop dropdowns from bubbling clicks
+    $(".dtype-change-row select").mousedown(function(e) {
+      // Do something
+      e.stopPropagation();
+    });
+
+
+    
+</script>
+
+<script>
+    let header_len = '{{ original_dtypes_values_readable_length }}';
+    console.log('header_len ', header_len)
+
+    // let select_width = $('.dtype-change-row select').width();
+    // $('.stylized-table-cell').width(select_width + 20);
+
+    for (let h=0; h < header_len; h++) {
+      let header_width = $('#resizable-table-'+h).width();
+      $('.resizable-table-vals-'+h).width(header_width);
+    }
+
+    $('#data-preview-table-onpage').width($('.dtype-change-row').width());
+
+    
+    $(document).ready(function() {
+      $('.dtype-selector').resizable({handles: 'e'});
+      
+    });
+</script>
+
+<!-- ..... -->
+<script>
+    
+  var interval_arr = []
+  $('.on-page .resizable-table').mousedown(function() {
+    
+    let clicked = this
+    let header = this.id.slice(this.id.indexOf('resizeable-table-') + 
+                'resizeable-table-'.length);
+    
+    interval_arr.forEach(function(e) {
+    clearInterval(e);
+    
+    });
+
+    let interval = setInterval(function(){ 
+      console.log(header);
+
+      $('.on-page .resizable-table-vals-'+ header).css({ // affected element
+            'width': ($('.on-page #resizeable-table-'+header).width() + 'px'),// desired width
+            // 'height': ($('#data-preview-table tbody tr').height() + 'px')
+            
+            });
+      $('#data-preview-table-onpage').width($('.dtype-change-row').width());
+      $('.file-preview-modal-content.on-page').width($('.dtype-change-row').width());
+        
+    }      
+    , 1);       
+
+    interval_arr.push(interval);
+
+  });
+
+  $('.on-page .resizable-table').mouseup(function() {
+            
+    setTimeout(function() {
+      interval_arr.forEach(function(e) {
+      clearInterval(e);
+      
+      });
+    }, 100);
+
+    $('#data-preview-table-onpage').width($('.dtype-change-row').width());
+
+  });
+
+  function upload_file_click() {
+    $('.loading-spinner').show();
+  }
+
+  function file_preview_close(clicked) {
+      interval_arr.forEach(function(e) {
+      clearInterval(e);
+      
+      });
+
+      modal.style.display = "none";
+  }
+  
+</script>
+
+
+
+{% if uploaded_file %}
+<script>
+  $(document).ready(function (){
+            $('html, body').animate({
+                scrollTop: $(".help-text-title").offset().top
+            }, 1000);
+    });
+</script>
+{% endif %}
+
+
+
+<script>
+ 
+
+  function submit_dtype_change(select_element) {
+    //console.log(select_element.id);
+    let associated_header = select_element.name;
+    
+    //console.log($('#id_text_value').val())
+    document.querySelector('.change-dtype #id_text_value').value = select_element.value;
+    document.querySelector('.change-dtype #id_text_key').value = associated_header;
+    //console.log($('#id_text_value').val())
+    
+    // should submit
+    document.getElementById('change-dtype-btn-constant' ).click();
+  }
+
+  // .........
+  
+  // need to check if we need to send ajax again when dropdowns are not clicked(back button case)
+  $( document ).ready(function() {
+    let dropdowns = document.querySelectorAll('.dtype-change-row select');
+    
+    // re-execute ajax reqs that is submit below, by clicking the same submit
+    //  button 5 (or more based on number of columns) times. Same form 
+    // should be submitted multiple times but with different values each iteration
+    dropdowns.forEach(select_element => {
+        submit_dtype_change(select_element)
+    });
+  });
+
+  
+
+ 
+  // when the column dtype changes
+
+  $('#change-dtype-constant').submit(function (e) {
+    // preventing from page reload and default actions
+    e.preventDefault();
+    let submitted_form = $(this);
+    // serialize the data for sending the form data.
+    var serializedData = $(this).serialize();
+
+    $('.loading-spinner').show();
+    
+    
+
+    // make POST ajax call
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'project1:change_col_dtype' %}",
+      data: serializedData,
+      success: function (response) {
+          
+          // Response here can Contain the stringified changed data when
+          // you implement the change datatype POST
+            
+          // 1. clear the form.
+          //submitted_form.trigger('reset');
+
+          console.log('\n response on dtype change: ', response)
+          let selected_header = response['selected_header']
+          console.log(selected_header)
+          let selected_header_index = response['selected_header_index']
+          let str_modded_rows = response['str_modded_rows']
+          // SUCCESS FEEDBACK
+          
+          // ->  Manipulate DOM to show data
+          let target_cells = document.querySelectorAll(
+                              '.on-page .resizable-table-vals-'+selected_header_index
+                              + ' p');
+          
+          for(let i=0; i < target_cells.length; i++ ) {
+            target_cells[i].innerHTML = str_modded_rows[i][selected_header];
+            target_cells[i].style['background-color'] = '#81ecec';
+            setTimeout(()=>{
+              target_cells[i].style['background-color'] = 'white';
+            }, 500);
+          }
+
+          $('.loading-spinner').hide();
+
+          
+
+          // -> trigger the GET Request here if needed            
+            
+        },
+        error: function (response) {
+            // alert the error if any error occured
+
+            console.log('>> error occured in dtype change! :\n', response);
+            
+        }
+    });
+  });
+
+ 
+
+ 
+
+   
+</script>
+
+
+
+<script>
+  $(window).on ('load', function() {
+    $('.loading-spinner').hide();
+    $('.table-outer-wrap').css('opacity', '1');
+  });
+
+  $('document').ready(function() {
+    $('.loading-spinner').hide();
+   
+  });
+
+ 
+</script>
+
+
+<script src="{% static 'app1/project1_javascript.js' %}"></script>
+
+
+{% endblock children %}
