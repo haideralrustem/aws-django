@@ -25,7 +25,6 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import  matplotlib.pyplot as plt
 
-from textstat.textstat import textstatistics,legacy_round
 
 from random import shuffle
 import pdb

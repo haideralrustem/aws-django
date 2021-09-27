@@ -8,6 +8,20 @@ venv/Scripts/Activate.ps1;cd haider_site;python manage.py runserver;
 cd django_app;venv/Scripts/Activate.ps1; cd haider_site;python manage.py runserver;
 
 
+# Useful commands On Linux:
+
+# to activate virtual environment
+source activate
+
+# sqlite3 problem
+wget https://kojipkgs.fedoraproject.org//packages/sqlite/3.8.11/1.fc21/x86_64/sqlite-3.8.11-1.fc21.x86_64.rpm
+sudo yum install sqlite-3.8.11-1.fc21.x86_64.rpm
+
+# remove permissions
+sudo chmod -R 777 django-project
+
+sudo yum install python3-mod_wsgi
+
 
 
 ______ ORM QUERYSETS ______
