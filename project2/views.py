@@ -29,7 +29,14 @@ def analyze_text(request):
     frequency_graph_data = []
     likely_topic = ''
     word_cloud_url = ''
-    complexity_score = ''
+    complexity_score =  0
+    text_value = ''
+    freq_dict = ''
+    word_count = None
+    frequency_graph_data = None
+    score = None
+    percentage =None
+    
 
     if request.method == 'POST' and request.is_ajax():
         

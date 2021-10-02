@@ -11,7 +11,9 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import SGDClassifier
 from sklearn.naive_bayes import MultinomialNB
 from statistics import mean
+import nltk
 from nltk.tokenize import word_tokenize
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 import numpy as np
 import nltk
@@ -128,7 +130,7 @@ def word_frequency(text):
     # text_words = word_tokenize(text)
     text_words = []
     text_words = tokenizer.tokenize(text)
-    
+       
     stop_words = set(stopwords.words('english'))
     text_words = [w for w in text_words if not w.lower() in stop_words]
 
