@@ -48,9 +48,9 @@
             
             
             <ul class="nav_links my_navbar centering hamburger">
-                <li ><a href="{% url 'project1:intro' %}">Project Simple Grapher</a></li>
-                <li><a href="{% url 'project2:intro' %}">Project Text Analyzer</a></li>
-
+                <li ><a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com/project1/intro">Project Simple Grapher</a></li>
+                <li><a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com/project2">Project Text Analyzer</a></li>
+                <li ><a href="{% url 'project1:food_suggester' %}">Project Food Suggester</a></li>
                 <li><a href="{% url 'app1:app1-about' %}">About</a></li>
                 
             </ul>
@@ -74,14 +74,14 @@
                             src="{{ user.profile.image.url }}" onclick="profile_drop_down_function()">
                         {% else %}
                             <img class="profile-pic  not-invisible " 
-                            src="{% get_media_prefix %}based-logo.png" onclick="profile_drop_down_function()">
+                            src="{% static 'images/based-logo.png' %}" onclick="profile_drop_down_function()">
                         {% endif %}
 
 
 
                     
                         {% comment %} <img class="profile-pic  invisible " 
-                        src="{% get_media_prefix %}based-logo.png" onclick="profile_drop_down_function()"> {% endcomment %}
+                        src="{% static 'images/based-logo.png' %}" onclick="profile_drop_down_function()"> {% endcomment %}
 
                     {% endif %}
                     
@@ -111,9 +111,11 @@
             
             
                 <ul id="drop_menu_list" class="drop_menu_list" >
-                    <li ><a href="{% url 'project1:intro' %}">Project Simple Grapher</a></li>
-                    <li><a href="{% url 'project2:intro' %}">Project Text Analyzer</a></li>
-                    <li><a href="https://haideralrustem.github.io/" target="_blank">About</a></li>
+                    <li><a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com/project1/intro">Project Simple Grapher</a></li> 
+                    <li><a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com/project2">Project Text Analyzer</a></li> 
+                    <li ><a href="{% url 'project1:food_suggester' %}">Project Food Suggester</a></li>
+                    
+                    <li><a href="{% url 'app1:app1-about' %}" target="_blank">About</a></li>
                     
                 </ul>
 
@@ -152,7 +154,7 @@
 
             <div class="side-footer"> 
                 <img class="logo-img-footer" 
-                src="{% get_media_prefix %}my_logo2.png"
+                src="{% static 'images/my_logo2.png' %}"
                 >  
             </div>
 
@@ -168,13 +170,13 @@
 
             <div id="second-footer-row" class="my-row footer-row">
                 <div class="footer-item footer-icon">
-                    <img data-url="https://www.linkedin.com/in/haider-al-rustem-32010515a/" class="social-media-icon" src="{% get_media_prefix %}linkedin1.png" onclick="routeToUrl(this)">
+                    <img data-url="https://www.linkedin.com/in/haider-al-rustem-32010515a/" class="social-media-icon" src="{% static 'images/linkedin1.png' %}" onclick="routeToUrl(this)">
                 </div> 
                 <div class="footer-item footer-icon">
-                    <img data-url="https://www.facebook.com/hydar.ali.92" class="social-media-icon" src="{% get_media_prefix %}facebook_logo2.png" onclick="routeToUrl(this)">
+                    <img data-url="https://www.facebook.com/hydar.ali.92" class="social-media-icon" src="{% static 'images/facebook_logo2.png' %}" onclick="routeToUrl(this)">
                 </div>
                 <div class="footer-item footer-icon">
-                    <img data-url="https://github.com/haideralrustem" class="social-media-icon" src="{% get_media_prefix %}github1.png" onclick="routeToUrl(this)">
+                    <img data-url="https://github.com/haideralrustem" class="social-media-icon" src="{% static 'images/github1.png' %}" onclick="routeToUrl(this)">
                 </div>
             </div>
 
@@ -192,12 +194,17 @@
 
         <div class="site-map">
             <div class="site-map-column">
-                <p class="site-map-column-title">Analytical Projects</p>
+                <p class="site-map-column-title">Projects</p>
                 <p class="site-map-column-subtitle">
-                    <a href="{% url 'project1:intro' %}">Simple Grapher</a>
+                    <a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com/project1/intro">Simple Grapher</a>
                 </p>
+               
                 <p class="site-map-column-subtitle">
-                    <a href="{% url 'project2:intro' %}">Text Analyzer</a>
+                    <a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com/project2">Text Analyzer</a>
+                </p>
+
+                <p class="site-map-column-subtitle">
+                    <a href="{% url 'project1:food_suggester' %}">Food Suggester</a>
                 </p>
                 
             </div>

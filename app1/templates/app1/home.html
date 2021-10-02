@@ -22,7 +22,7 @@
     
     <!-- img goes here -->
     <div class="welcome-text">
-        Welcome to my Analytical Projects showcase.<br>
+        Welcome to my Projects showcase.<br>
         
     </div>
 
@@ -32,7 +32,7 @@
     <div class="built-by-python" data-url="https://www.djangoproject.com/" 
     onclick="navigateToUrl(this)">
         <div class="built-by-python-img">
-            <img class="django-logo" src="{% get_media_prefix %}django_logo.png">
+            <img class="django-logo" src="{% static 'images/django_logo.png' %}">
         </div>
        <div class="built-by-python-text">built by the Django Framework</div> 
 
@@ -42,16 +42,17 @@
 
 <!--& c:/Users/xario/PycharmProjects/django_app/venv/Scripts/Activate.ps1 ; cd haider_site ; python manage.py runserver-->
 <div class="home-wrap">
-    <h2 class="home-title"> Analytical Projects: </h2>
-    <p class="home-subtitle">A list of projects that are focused on computational analysis.</p>
+    <h2 class="home-title"> Projects: </h2>
+    <p class="home-subtitle">A list of projects I built.</p>
 
-    <div class='card-container'>
-        <a href="{% url 'project1:intro' %}">
+
+    <div class='card-container analyzer-card'>
+        <a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com/project1/intro">
         
         <div class="card-wrap">
 
             <div class="card-img">
-                <img class="card-img-photo" src="{% get_media_prefix %}simple_grapher_thumbnail.png">
+                <img class="card-img-photo" src="{% static 'images/simple_grapher_thumbnail.png' %}">
             </div>
             <!-- -->
             <div class="card-text-content">
@@ -69,14 +70,17 @@
         </a>
     </div>
 
-        <hr>
 
-    <div class='card-container'>
-        <a href="{% url 'project2:intro' %}">
+
+    <hr>
+
+
+    <div class='card-container analyzer-card'>
+        <a href="http://ec2-13-58-70-58.us-east-2.compute.amazonaws.com//project2">
             <div class="card-wrap">
 
                 <div class="card-img">
-                    <img class="card-img-photo" src="{% get_media_prefix %}text_analysis_thumbnail.png">
+                    <img class="card-img-photo" src="{% static 'images/text_analysis_thumbnail.png' %}">
                 </div>
                 <!-- -->
                 <div class="card-text-content">
@@ -89,6 +93,45 @@
         </a>
     </div>
 
+    <hr>
+
+
+    <div class='card-container food_suggester'>
+        <a href="{% url 'project1:food_suggester' %}">
+        
+        <div class="card-wrap">
+
+            <div class="card-img">
+                <img class="card-img-photo" src="{% static 'images/food_thumbnail_mod.png' %}">
+            </div>
+            <!-- -->
+            <div class="card-text-content">
+                <div class="card-text-title"><h4><p><span style="font-weight: bold;color: #FF7F0E;font-style: italic;">FOOD</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">SUGGESTER</span></h4></div>
+                <hr>
+                <div class="card-text-body">
+                    <p><span style="font-weight: bold;color: #FF7F0E;font-style: italic;">Food</span><span style="font-style: italic; font-weight: bold; color: #1F77B4">SUGGESTER</span>
+                        is a tool that uses <a href="https://foodish-api.herokuapp.com/">Foodish API</a> to generate a random food dish.
+                     </p>
+                     <p>Useful for when you need quick food ideas and can't decide</p>
+                        
+                </div>
+            </div>
+            
+        </div>
+
+        </a>
+    </div>
+
+
+
+    
+
+
+
+
+
+
+
     
 
     <div class="container-vertical">
@@ -96,11 +139,33 @@
     <!-- to add a new card, create a row (houses two cards), then put it in .card-wrap-vertical -->
         
     <div class="row-vertical">
-        <div class="frame-limiter">
+        <div class="frame-limiter analyzer-card">
             <div class="card-wrap-vertical hover-border">
 
                 <div class="card-img">
-                    <img class="card-img-photo" src="{% get_media_prefix %}simple_grapher_thumbnail.png">
+                    <img class="card-img-photo" src="{% static 'images/simple_grapher_thumbnail.png' %}">
+                </div>
+                <!-- -->
+                <div class="card-text-content">
+                    <div class="card-text-title">
+                        <h4><span class="tcard-title-brand">Text Analyzer</span></h4>
+                    </div>
+                    <hr>
+                    <div class="card-text-body">
+                        <p>Generates an analytical summary of any entered text</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div class="frame-limiter">
+            <a href="{% url 'project1:food_suggester' %}">
+            <div class="card-wrap-vertical hover-border">
+
+                <div class="card-img">
+                    <img class="card-img-photo" src="{% static 'images/food_thumbnail_mod.png' %}">
                 </div>
                 <!-- -->
                 <div class="card-text-content">
@@ -117,13 +182,14 @@
                 </div>
                 
             </div>
+            </a>
         </div>
     
-        <div class="frame-limiter ">
+        <div class="frame-limiter analyzer-card">
             <div class="card-wrap-vertical hover-border">
 
                 <div class="card-img">
-                    <img class="card-img-photo" src="{% get_media_prefix %}text_analysis_thumbnail.png">
+                    <img class="card-img-photo" src="{% static 'images/text_analysis_thumbnail.png' %}">
                 </div>
                 <!-- -->
                 <div class="card-text-content">
