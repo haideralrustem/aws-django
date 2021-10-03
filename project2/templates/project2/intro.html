@@ -1,0 +1,390 @@
+{% extends "app1/base.html" %}
+
+{% load static %}
+{% static "csv_files/data2.csv" %}
+
+{% block children %}
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.css' %}">
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+<script src="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+
+<div class="loading-spinner"></div>
+
+
+
+
+
+<div class='head-container'>
+  <div class="slide-action sliding-img">
+      <h1 class='head-text text-analyzer-header'> </h1>
+      <div class='visor-div'></div>
+  </div>
+
+  <hr>
+  
+  
+  <div class="scroll-text">
+    <div class='visual-visor'>Scroll down to begin ... </div>
+  </div>
+  
+
+  <div class="slide-down-arrow s1 top"></div>
+  <div class="slide-down-arrow s2 top"></div>
+
+
+</div> 
+
+
+<div class='mid-content mc1'>
+
+  <div id='tutorial-card1' class='tutorial-card hideme'>
+
+    <div class='tcard content'>
+      <p class="tcard-title"><span class="tcard-title-brand">Text Analyzer</span> gives you an insight 
+      into any piece of text.</p>
+      <p>Just paste a text into the text area and run the analysis!</p>
+    </div>
+    <div class='tcard-side-img'>
+      <img class='tcard-img' src="{% get_media_prefix %}textAnalyzer1.png">
+    </div>
+
+  </div>
+
+
+  <div id='tutorial-card2' class='tutorial-card hideme'>
+    <div class='tcard content'>
+      <p class="tcard-title"><span class="tcard-title-brand">Text Analyzer</span> generates a simple summary of the entered text</p>
+      <p>This includes word count, most frequent words, and the general text topic</p>
+    </div>
+    <div class='tcard-side-img'>
+      <img class='tcard-img' src="{% get_media_prefix %}textalanlyzer_analysis.png">
+    </div>
+  </div>
+
+
+  <div class="text-analyzer-btn-wrap">
+  <button onclick="startButtonClick()" 
+  class="text-analyzer-btn oversized-button blue-button-rev hideme">
+    START</button>
+  <a id="start-text-analyzer" href="{% url 'project2:text_analyzer_main' %}" style="display: none;"></a>
+  </div>
+</div>
+
+<div class="bottom-arrows-div">
+  <div class="bottom-arrows-div-inner">
+    <div class="slide-down-arrow s2 bottom"></div>
+    <div class="slide-down-arrow s1 bottom"></div>
+  </div>
+</div>
+
+
+<script>
+  $('.sliding-img').width();
+</script>
+
+<script>
+    $(window).on ('load', function() {
+      $('.loading-spinner').hide();
+      $('.table-outer-wrap').css('opacity', '1');
+    });
+  
+    $('document').ready(function() {
+      $('.loading-spinner').hide();
+     
+    });
+  
+   
+  </script>
+
+
+
+<script>
+  let slider = document.querySelector('.slide-action');
+  let header = document.querySelector('.head-text');
+  let w_text = 'Welcome To Text Analyzer....';
+  let visor_div = document.querySelector('.visor-div');
+  let scroll_down_text = document.querySelector('.scroll-text');
+  
+  let intervals = []
+  let time_out_base = 500;
+  
+  
+  slider.style.width = 0 + 'px';
+  // slider.style.height = 0 + 'px';
+  
+  setTimeout(
+      ()=>{
+          slider.style.width = 100+ '%';
+          slider.style.height = 60 + 'vh';
+          slider.style.left = 0 + '';
+          
+  
+      }, time_out_base
+  )
+  
+  
+  setTimeout(
+      () => {
+          
+          header.style.opacity = '1';
+          
+          visor_div.style.transition = '1s all ease-in';
+          visor_div.style.width = 10 + '%';
+          visor_div.style.left = 35 + '%';
+          header.innerHTML = w_text;
+          visor_div.style.opacity = '0';
+            
+          
+      }, time_out_base
+  );
+  
+  // setTimeout(() => {scroll_down_text.style.opacity = '1';}, time_out_base + 1300);
+  
+  setTimeout(()=>{
+      visor_div.remove();
+  }, 2000)
+  
+  
+  function handleArrows() {
+      let arrows = document.querySelectorAll('.slide-down-arrow.top');
+  
+      setTimeout( function(){
+          arrows.forEach(
+          (elm) => {
+              elm.style.opacity = '1';
+          }
+          );
+          scroll_down_text.style.opacity='1';
+      }
+      , time_out_base + 1000 );
+  
+      let firstArrow = document.querySelector('.slide-down-arrow.s1.top');
+      let secondArrow = document.querySelector('.slide-down-arrow.s2.top');
+      
+      
+  
+      setTimeout( function(){
+          // scroll_down_text.style.opacity = '1';
+          let arr_interval = setInterval(() => {
+              
+              secondArrow.style.opacity = '0';
+              setTimeout(() => { firstArrow.style.opacity='0' }, 400);
+              
+  
+              setTimeout(() => { secondArrow.style.opacity='1' }, 700);
+              setTimeout(() => { firstArrow.style.opacity='1' }, 800);
+
+              setTimeout(() => { secondArrow.style.opacity='0' }, 1200);
+              setTimeout(() => { firstArrow.style.opacity='0' }, 1300);
+              
+  
+          }, 1000 + 300);
+  
+          intervals.push(arr_interval);
+  
+      }
+      , time_out_base + 1000 );
+      
+
+      setTimeout(function(){
+          // remove arrows when scrolled
+          window.onscroll = function() {
+              console.log('scrolling');
+              intervals.forEach((intv)=>{clearInterval(intv)})
+              arrows.forEach(
+                  (elm) => {
+                      setTimeout(()=>{elm.style.opacity='0'}, 0);
+                      setTimeout(()=>{elm.remove()}, 1500);
+                      }
+                  );
+              
+              setTimeout(()=>{scroll_down_text.style.opacity='0'}, 100);
+              setTimeout(()=> {scroll_down_text.remove();
+
+                              
+
+                              }, 1500);
+              handleSecondArrows();
+
+              
+          };
+      }, time_out_base + 1000);
+  
+      
+  }
+  
+  
+  function handleSecondArrows() {
+    let effect_finished = 0;
+
+    let arrows = document.querySelectorAll('.slide-down-arrow.bottom');
+  
+      setTimeout( function(){
+          arrows.forEach(
+          (elm) => {
+              elm.style.opacity = '1';
+          }
+          );
+          scroll_down_text.style.opacity='1';
+      }
+      , 0 );
+  
+      let firstArrow = document.querySelector('.slide-down-arrow.s1.bottom');
+      let secondArrow = document.querySelector('.slide-down-arrow.s2.bottom');
+      let button = document.querySelector('.text-analyzer-btn');
+      let body = document.querySelector('body');
+      
+  
+      setTimeout( function(){
+          // scroll_down_text.style.opacity = '1';
+          let arr_interval = setInterval(() => {
+              
+              secondArrow.style.opacity = '0';
+              setTimeout(() => { firstArrow.style.opacity='0' }, 400);
+              
+  
+              setTimeout(() => { secondArrow.style.opacity='1' }, 700);
+              setTimeout(() => { firstArrow.style.opacity='1' }, 800);
+
+              setTimeout(() => { secondArrow.style.opacity='0' }, 1200);
+              setTimeout(() => { firstArrow.style.opacity='0' }, 1300);
+              
+  
+          }, 1000 + 300);
+  
+          intervals.push(arr_interval);
+  
+      }
+      ,  50 );
+      
+
+      setTimeout(function(){
+          // remove arrows when scrolled
+          window.onscroll = function() {
+            //console.log(button.offsetTop*0.35 + '  ' + $(window).scrollTop());
+           
+            if (effect_finished === 0){
+              if ($(window).scrollTop() >= button.offsetTop*0.5) {
+               
+                // $('.text-analyzer-btn').addClass('flash-shadow-bordered ');
+                     
+                intervals.forEach((intv)=>{clearInterval(intv)})
+                arrows.forEach(
+                  (elm) => {
+                      setTimeout(()=>{elm.style.opacity='0';
+                                           
+                      }, 100);
+
+                      // let's flash the START button
+
+                      });
+
+                effect_finished = 1;
+                // setTimeout(()=>{ $('.text-analyzer-btn').removeClass('flash-shadow-bordered ');}, 
+                //                 2000);
+
+              }
+              
+              
+            }
+          };
+
+      }, 0 );
+
+      // setTimeout(()=>{ $('.text-analyzer-btn').removeClass('flash-shadow-bordered ');}, 
+      //                           3000);
+
+  }
+  
+  
+  
+  // -------  function calls --------
+  handleArrows();
+  
+  </script>
+
+<script>
+
+function startButtonClick() {
+  let selector = 'start-text-analyzer';
+  window.location = $('#'+ selector).attr('href');
+  
+}
+    /* Every time the window is scrolled ... */
+let flashedAlready = [];
+
+$(window).scroll( function(){
+  var top_of_window = $(window).scrollTop();
+
+
+  let incremental = 0.05; //0.1
+  let i=0;
+  allMediaQueries.forEach((mq)=>{
+    if(mq === true) {
+      incremental = incremental + (i * 0.06)
+    }
+    i ++;
+  });
+
+  
+  
+  $('.hideme').each( function(i){
+
+      //$('.hideme').offset().top
+      let top_of_object = $(this).offset().top;
+
+            
+
+      // let bottom_of_object = $(this).offset().bottom;
+      // let bottom_of_window = $(window).scrollTop()
+
+      /* If the object is completely visible in the window, fade it in */
+      if( top_of_window >= top_of_object*(0.1+incremental) ){
+
+          $(this).animate({'opacity':'1'},500);
+          // if($(this).hasClass('text-analyzer-btn'))
+          
+          if(!containsObject($(this).attr('id'), flashedAlready)) {
+            console.log(flashedAlready)
+            $(this).addClass('flash-shadow-bordered ');
+            setTimeout(()=>{ $(this).removeClass('flash-shadow-bordered ');}, 
+                              1000);
+            flashedAlready.push($(this).attr('id'));
+          }
+        
+      } 
+      incremental += 0.06
+
+  }); 
+
+  // if(top_of_window >= )
+
+  let b = $('.text-analyzer-btn').offset().top;
+  if(top_of_window >= b *0.6) {
+    let arrows_div = document.querySelector('.bottom-arrows-div');
+    if(arrows_div) {
+      arrows_div.remove();
+    }
+    
+  }
+
+});
+
+  </script>
+  
+  
+  <script src="{% static 'app1/project2_javascript.js' %}"></script>
+  
+  
+  {% endblock children %}

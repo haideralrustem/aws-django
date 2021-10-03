@@ -1,0 +1,258 @@
+{% load static %}
+
+
+<div id="myModal" class="myModal plot-viewer" >
+
+    <!-- Modal content -->
+    <span class="close movable-content" onclick="close_plot_viewer(this)">&times;</span>
+    <div class="modal-innercontent animated movable-content">    
+      
+        <div class=''>
+
+          <div id="mover" class='movable'>
+            
+            <div class="help-text-title" style="margin-top: 1%;">
+                Plot Viewer
+            </div>
+
+            <p>You can rescale image</p>
+            
+          </div>
+
+          <div class="container_col_plot">
+            
+            <div class='rightside-modal-space movable'>
+            </div>
+
+            <div class="image-preview dragscroll">
+              <img id="main_graph" src='{% get_media_prefix %}generated_plot.png'> 
+             
+            </div>
+
+          </div>
+          
+
+          
+          <div id="bottom-panel-modal" class='movable'>
+            <button type="button" class="btn btn-secondary modal-button"
+                onclick="close_plot_viewer(this)">Close</button>     
+            <button class="btn btn-primary modal-button" onclick=" click_download()">
+              DOWNLOAD Image
+            </button>   
+            
+            <div class="size-slider-container">
+              <div class="size_slider_label">Size : <span></span>X</div>
+              <div id="slider"></div>
+            </div>
+          </div>
+
+      
+    </div>
+    
+  
+  </div>
+
+ 
+<script src="{% static 'app1/dragscroll-master/dragscroll.js' %}">
+</script>
+
+<script>
+  var original_w = 0;  // original width of the img
+  var scaling = 1;  // same as  ui.value
+  var img_width;
+  var img_height;
+  
+
+  var prev_src = "{% get_media_prefix %}generated_plot.png";
+  imageObject = document.getElementById("main_graph");
+  // imageObject.style.display = 'inline-block';
+  imageObject.src = prev_src;
+
+  let download = function(){
+    let link = document.createElement('a');
+    link.download = 'anAnswer.png';
+    link.href = document.getElementById('mycanvas').toDataURL();
+    link.click();
+  }
+
+
+  function click_download(){
+    // $('#mycanvas').removeClass('hidden-canvas');
+    // $('#mycanvas').addClass('before-save-canvas');
+
+    let img = new Image();
+    img.src = prev_src;
+    
+    console.log(img);
+    console.log(prev_src);
+    img.setAttribute("crossorigin", "anonymous");
+    img.addEventListener("load", function() {
+    let canvas = document.getElementById("mycanvas");
+    canvas.width = img_width;
+    canvas.height = img.height;
+
+    let ctx = canvas.getContext("2d");
+    // ctx.scale(scaling, scaling);  // width, height
+   
+    ctx.drawImage(img, 0, 0);
+    // download();
+
+    //$('#mycanvas').removeClass('hidden-canvas');
+  });
+
+  }
+
+  
+</script>
+
+
+<!-- slider action -->
+<script>
+  var prev_img_scale = [];
+  let midpoint = 1;
+  let calc_width = 1;
+  
+  $(document).ready(
+    function(){
+      original_w = $('#main_graph').width();
+    }
+  );
+  
+  $( function() {
+    $( "#slider" ).slider(
+      {
+        max: 4.0,
+        min: 0.20,
+        step: 0.1,
+        value: midpoint,
+        create: function( event, ui ) {
+          $('.size_slider_label span').html(midpoint);
+        },
+        slide: function( event, ui ) {
+          $('.size_slider_label span').html(ui.value);
+          scaling = ui.value;        
+          calc_width = original_w * ui.value;
+          $('#main_graph').width(calc_width);
+          img_width = $('#main_graph').width();
+          img_height = $('#main_graph').height();
+          console.log($('#main_graph').width());
+
+        }
+      }
+    );
+  } );
+
+
+  let slider_value = $( "#sldier" ).slider( "option", "value" );
+  console.log(slider_value);
+</script>
+
+
+<script>
+
+ // Get the modal
+ var modal = document.querySelector("#myModal.plot-viewer");
+
+function show_file_preview_modal(e) {
+
+  modal.style.display = "block";
+
+  let modal_innercontent = document.querySelector(".plot-viewer .modal-innercontent");
+  let span_close = document.querySelector('.plot-viewer span.close');
+
+  setTimeout(() => {
+    modal_innercontent.style['opacity'] = "1";
+  }, 90);
+  
+  span_close.style.left =  modal_innercontent.offsetLeft +
+  modal_innercontent.offsetWidth-35+'px';
+  span_close.style.top =  modal_innercontent.offsetTop-60+'px';
+}
+
+function close_plot_viewer(clicked_btn) {
+    let modal = document.querySelector("#myModal.plot-viewer");
+    modal.style.display = "none";
+      
+}
+
+
+window.onresize = function() {
+    let modal = document.querySelector("#myModal.plot-viewer");
+
+    if (modal.style.display ==="block"){
+      let elmnt = document.querySelector(".plot-viewer .modal-innercontent");
+      let span_close = document.querySelector('.plot-viewer span.close');
+      span_close.style.left =  elmnt.offsetLeft +
+      elmnt.offsetWidth-35+'px';
+      span_close.style.top =  elmnt.offsetTop-60+'px';
+      
+      }
+  }
+
+
+  dragElement(document.querySelector(".plot-viewer .modal-innercontent"));
+  // dragElement(document.querySelectorAll(".movable-content"));
+  
+  
+  function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.querySelectorAll(".plot-viewer .movable")) {
+      // if present, the header is where you move the DIV from:
+      console.log('if present, the header is where you move the DIV from:')
+      let arr = document.querySelectorAll(".plot-viewer .movable");
+      arr.forEach(function(e) {
+        e.onmousedown = dragMouseDown;
+      });
+      
+      
+    } else {
+      // otherwise, move the DIV from anywhere inside the DIV:
+      elmnt.onmousedown = dragMouseDown;
+    }
+  
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
+    }
+  
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      // set the element's new position:
+      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+
+      
+      let span_close = document.querySelector('.plot-viewer span.close');
+      span_close.style.left =  elmnt.offsetLeft +
+        document.querySelector(".plot-viewer .modal-innercontent").offsetWidth-35+'px'
+        ;
+      span_close.style.top =  document.querySelector(".plot-viewer .modal-innercontent").offsetTop-60+'px';
+      
+    }
+  
+    function closeDragElement() {
+      // stop moving when mouse button is released:
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  }
+  
+
+
+// ............
+
+show_file_preview_modal(null)
+
+</script>

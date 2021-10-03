@@ -1,0 +1,1873 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+.centering {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+}
+
+
+@font-face {
+    font-family: "f1";
+    src: url('./Formula1-Regular.ttf')
+}
+
+@font-face {
+    font-family: "mitchaella";
+    src: url('./mitchaella-font/MitchaellaFreeModernUniqueRegular-EaE5j.ttf');
+}
+
+@font-face {
+    font-family: "aquire";
+    src: url('./aquire-font/Aquire-BW0ox.otf');
+    src: url('./aquire-font/AquireBold-8Ma60.otf');
+    src: url('./aquire-font/AquireLight-YzE0o.otf');
+}
+
+@font-face {
+    font-family: "valentine";
+    src: url('./valentine-font/Valentine-0WgWz.ttf');
+    src: url('./valentine-font/Valentine-4B4BK.otf');
+}
+
+.poppins-font {
+    font-family: Poppins, Helvetica, Arial, sans-serif;
+}
+
+
+.flash-shadow-bordered {
+    box-shadow: 2px 3px 29px 15px #00beff;
+  
+  }
+
+
+/* ........................... */
+
+
+
+html {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+body {
+    position: relative;
+    
+}
+
+.flash-shadow-bordered {
+    box-shadow: 2px 3px 29px 15px #00beff;
+  }
+
+.invisible {
+    opacity: 0;
+}
+
+.not-invisible {
+    opacity: initial;
+}
+
+.loading-spinner {
+    display: block;
+    position: fixed;
+    z-index: 2;
+    top: 40%; left: 0; bottom: 0; right: 0;
+    margin: auto;
+    
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+.form_div {
+    margin-left: 10%;
+}
+
+.headers {
+    
+}
+
+.child-block {
+    margin-left: 1px;
+    margin-top: -7px;
+}
+
+.invalid-feedback {
+    color: Tomato;
+}
+
+.nav_header {
+    background-color: rgba(0, 153, 255, 0.418);
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1%;
+    /* height: 80px; */
+    height: fit-content;
+    position: relative;
+}   
+
+.nav_header nav {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+nav {
+    /* position: relative; */
+}
+
+.nav_together {
+    display: flex;
+    justify-content: flex-start;
+    width: 80%;
+    height: 100%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.nav_header ul {
+    list-style-type: none;
+    padding-left: 0%;
+}
+
+.my_navbar li {
+    display: inline-block;
+    font-family: "Montserrat", san-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: blue;
+    letter-spacing: 0px;
+    transition: all 0.3s ease 0s;
+    padding: 0 10px;
+}
+
+
+
+.my_navbar li:hover {
+    color: purple;
+}
+
+.my_navbar a {
+    color:rgb(17, 0, 255);
+    text-decoration: none;
+    transition: 0.2s all ease-in-out;
+    font-weight: bold;
+
+}
+
+.my_navbar a:hover {
+    color:rgb(172, 4, 149);
+    
+    background-color: #b8e1fc;
+}
+
+.logo-img {
+    cursor: pointer;
+    width: 28%;
+}
+
+.nav-right-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.cta {
+    margin: auto 0;
+}
+
+.profile-pic-wrap {
+    width: 40%;
+    position: relative;
+}
+
+.profile-drop-menu {
+    position: absolute;
+    list-style: none;
+    right: 5%;
+    top: 103%;
+    background-color: #dff9fb;
+    /* margin-right: 80%;
+    padding-right: 170%; */
+    padding-left: 5%;
+    margin-right: auto;
+    margin-left: auto;
+    transition: max-height 1s ease-out;
+    opacity: 0;
+}
+
+.profile-pic {
+    cursor: pointer;
+    width: 45%;
+    /* height: 90%; */
+    margin-right: 5%;
+    margin-left: 15%;
+    margin-bottom: 3%;
+    margin-top: 3%;
+    border-radius: 50%;
+}
+
+.nav-button {
+    width: 90px;
+    background-color: #00cec9;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.nav-button:hover {
+    background-color: rgba(0, 136, 169, 0.5);
+}
+
+.hamburger_button {
+    display: none;
+    background-color: #dff9fb;
+    width: auto;
+    height: fit-content;
+    padding: 0 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+    border-radius: 10%;
+}
+
+.hamburger_button_inner {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+    transition: 0.5s;
+}
+
+.change.bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+    transition: 0.5s;
+}
+
+.change.bar2 {
+    opacity: 0;
+}
+
+.change.bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+    transition: 0.5s;
+}
+
+.drop_menu {
+    display: none;
+    position: relative;
+    /* right: 5%;
+    top: 40%; */
+    background-color: #dff9fb;
+    margin: inherit;
+    border-radius: 10%;
+    width: auto;
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* padding: 0 1%; */
+}
+
+.drop_menu_list {
+    position: absolute;
+    width: 500%;
+    list-style: none;
+    right: 0;
+    top: 103%;
+    background-color: #dff9fb;
+    /* margin-right: 80%;
+    padding-right: 170%; */
+    padding-left: 5%;
+    margin-right: auto;
+    margin-left: auto;
+    transition: max-height 1s ease-out;
+    opacity: 0;
+
+    z-index: 4;
+}
+
+.drop_menu_list li {
+    /* for centering */
+    display: table;
+    margin: 0px auto 0px auto;
+    
+    /*  */
+}
+
+.drop_menu_list li:hover {
+    color: rgb(17, 0, 255);
+    border-radius: 7px;
+    
+    font-weight: bold;
+}
+
+.drop_menu_list a {
+    text-decoration: none;
+}
+
+
+/*...........  child block at home.html .................... */
+.home-title {
+    padding-top: 30px;
+    font-family: "Helvetica", monospace;
+    border-bottom: 1px solid #1f77b4;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    
+}
+.home-subtitle {
+    margin-bottom: 5px;
+}
+
+.about-title {
+    margin: 3% 3% 0 3%;
+}
+.about-me-card {
+    margin-top: 6%;
+}
+
+
+.about-me-pic {
+    margin: 2% 5% 1% 8%;
+    border-radius: 5px;
+    width: fit-content;
+    height: fit-content;
+    box-shadow: 0px 0px 10px 10px rgb(148 212 255);
+    float: left;
+}
+.about-me-pic img {
+    max-width:307px;
+    max-height:100%;
+    width: 35vw;
+
+}
+.about-me-text {
+    margin: 1% 1% 1% 5%;
+    border: 1px solid rgb(148 212 255);
+    padding: 1% 3% 0 3%;
+}
+.contact-card {
+    margin-left: 5%;
+    margin-right: 1%;
+    margin-top: 5%;
+    border: 1px solid rgb(148 212 255);
+    padding: 1% 1% 1% 1%;
+}
+
+.home-wrap {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.home-img-wrap {
+    background-color: lavender;
+    background-image: url("../../../media/ales-nesetril.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: auto;
+    height: 55vh;
+
+    position: relative;
+    
+}
+
+.welcome-text {
+    color: white;
+    font-family: "Montserrat", san-serif;
+    font-size: 30px;
+    position: absolute;
+    top: 6%;
+    left: 4%;
+    font-style: italic;
+    opacity: 0;
+    transition: 0.4s opacity ease-in-out;
+}
+
+.built-by-python-img {
+    
+}
+
+.django-logo {
+    width: 100px;
+    height: 100px;
+}
+
+
+.built-by-python {
+    position: relative;
+    left: 80%;
+    top: 47%;
+    width: 120px;
+    height: 120px;
+
+    cursor: pointer;
+}
+
+.built-by-python-text {
+    color: white;
+    font-family: "Montserrat", san-serif;
+    font-size: 20px;
+}
+
+.about-me-wrap {
+    margin: 1% 5% 1%  5%;
+}
+
+.contact-container {
+    padding: 9px 5px 6px 6px;
+}
+.social-contact-wrap {
+    margin-left: 1%;
+}
+.social-media-panel {
+    display: flex;
+}
+
+.social-media-panel img {
+    width: 45%;
+}
+
+.social-media-pic {
+    max-width: fit-content;
+}
+.social-media-pic img {
+    margin-bottom: 5%;
+    transition: 0.4s all ease-in-out;
+}
+.social-media-pic img:hover {
+    transform: scale(1.2);
+}
+
+h4.text-gp {
+    margin-bottom: 3%;
+}
+#githubDiv p {
+    padding-left: 22px;
+}
+
+
+
+/* ................. */
+
+.frame-limiter {
+    /* use this class to introduce a max-height or width so if you have transition
+    effects, they will not push out other elements */
+    /* max-width: 417px;
+    max-height: 366px;
+    position: relative; */
+}
+
+.card-container {
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 3%;
+    margin-top: 5%;
+}
+.card-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.tcard-title-brand {
+    font-family: "f1",  sans-serif;
+    font-weight: bold;
+    color: #00458f;
+}
+
+.card-wrap {
+    display: flex;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    padding: 1% 2%;
+    height: auto;
+    width: 95%;
+    /*box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color];*/
+    border: 1px ridge #06b7fc;
+    box-shadow: 0px 0px 5px 1px #0000ff2e;
+    border-radius: 7px;
+    transition: all 0.3s  ease-in-out;
+}
+
+.card-wrap:hover {
+    border: 2px ridge #06b7fc;
+    box-shadow: 0px 0px 15px 1px #06b6fc79;
+    transform: scale(1.02);
+    
+}
+
+.card-wrap:hover .card-img {
+    /* width: 30%; */
+    width: 20vw;
+    height: 100%;
+}
+
+.card-img {
+    /* width: 30% */
+    width: 20vw;
+    height: 100%;
+    margin-right: 2%;
+    transition: width 0.4s, height 0.4s, border 0.4s;
+}
+
+.card-img-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 7px;
+}
+
+.card-text-content {
+    /* width: 100%; */
+}
+
+
+.food_suggester .card-text-content {
+    margin-left: 2%;
+}
+
+/* .analyzer-card {
+    display: none;
+} */
+
+
+
+
+/*....  vertical cards .....*/
+
+.container-vertical {
+    display: none;
+}
+
+.row-vertical {
+    display: none;
+}
+
+.card-wrap-vertical {
+    display: none;
+    width: 45%;
+    /* border: 1px ridge #06b7fc; */
+    box-shadow: 0px 0px 2px 1px #06b7fc;
+    border-radius: 7px;
+    transition: 0.4s all  ease-in-out;
+    cursor: pointer;
+}
+
+.card-wrap-vertical:hover {
+    
+    border: 2px ridge #06b7fc;
+    box-shadow: 0px 0px 15px 1px #06b6fc79;
+    transform: scale(1.02);
+}
+
+.hover-border {
+    border: 2px ridge transparent;
+    display: block;
+}
+
+.hover-border:hover {
+    border: 2px ridge #06b7fc;
+}
+
+.card-wrap-vertical:hover .card-img {}
+
+
+/* --------------------------------------------- */
+
+
+/* -------------- Profile ----------------------- */
+
+
+/* ---------------------------------------------- */
+div.alert {
+    transition: opacity 1s ease-out;
+
+}
+
+#user-name-prompt.shown {
+    display: inline-flex;
+    
+}
+#email-prompt.shown {
+    display: inline-flex;
+    
+}
+/* .......... */
+#user-name-prompt.hidden {
+    display: none;
+    
+}
+#email-prompt.hidden {
+    display: none;
+}
+
+/* ... */
+
+#user-update-field {
+    display: none;
+}
+#user-update-field.shown {
+    display: inline-flex;
+}
+#user-update-field.hidden {
+    display: none;
+}
+/* ...... */
+
+#email-update-field {
+    display: none;
+}
+#email-update-field.shown {
+    display: initial;
+}
+#email-update-field.hidden {
+    display: none;
+}
+
+
+
+.user-update-field {
+    display: inline-flex;
+} 
+
+
+.update-form input{
+    height: 125%;
+}
+.crispy-form {
+    display: inline-flex;
+} 
+.crispy-form label {
+    display: none;
+}
+/* .crispy-form input[type="text"] {
+    
+} */
+
+.user-update-btn {
+    height: 81%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.not-visible{
+    display: none;
+}
+.visible {
+    display: initial;
+}
+
+#user-info {
+    font-style: italic;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.user-profile-container {
+    margin-left: 2.5%;
+    margin-right: 1.5%;
+}
+
+.profile-show {
+    margin: 2% 2% 2% 3%;
+    width: 40%;
+}
+
+.divider {
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 11px 5px -13px rgb(0 123 255);
+    margin: 0 2%;
+}
+
+.samller {
+    display: inline-flex;
+}
+
+.larger {
+    display: none;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+#profile-first-divider {}
+
+.profile-card {
+    display: flex;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 14vw;
+    /* width: 88vw; */
+    width: 100%;
+}
+
+.profile-card-photo {
+    width: 14vw;
+    height: 14vw;
+    border-radius: 4%;
+}
+
+.profile-card-text-box {
+    width: 100%;
+    margin-left: 1.5%;
+    box-shadow: 0px 0px 10px 1px #0000ff2e;
+    border-radius: 7px;
+    padding: 2%  1%  0 3%;
+}
+
+.user-info-line p {
+    
+}
+
+
+.user-info-column p {
+    display: inline-flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    padding-right: 5%;
+}
+
+#first.user-info-column {
+    width: 100%;
+}
+
+
+.edit-profile-icon-span {
+    width: 100%;
+    margin-left: 10%;
+    display: inline-flex;
+    
+}
+.edit-text{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.update-success-msg {
+    color: rgb(4, 172, 4);
+    margin-left: 13%;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.change-profile-pic-text {
+    display: none;
+}
+
+.profile-info-form {
+    margin-left: 2.5%;
+    margin-right: 5.5%;
+}
+
+.edit-profile-icon {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 51%;
+    display: block;
+}
+
+/* ---------------------------------- */
+/* ............. footer ...........  */
+
+
+.footer {
+    background-color: rgba(0, 153, 255, 0.418);
+    width: 100%;
+    /* height: 210px; */
+    height: 280px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1%;
+    margin-top: 20%;
+    
+    position: absolute;
+    height: 450px;
+    
+    bottom: 0;
+    left: 0;
+    top: 200px;
+    
+    color: rgb(92, 104, 116);
+    /* rgb(223, 249, 251)  light blue */
+    /*  rgb(104, 109, 224)  purple border*/
+}
+
+.my-row {
+    display: flex;
+}
+
+.footer .my-row {
+    justify-content: center;
+    margin-left: 8vw;
+}
+
+.footer>.my-row {
+    border-bottom: 1px solid #000dfc3b;
+    padding-top: 2%;
+}
+
+.footer-row-wrap {
+    width: 80%;
+    margin-left: 2%;
+    margin-bottom: 2%;
+}
+
+.footer-row {
+    display: flex;
+}
+
+#first-footer-row {
+    max-height: 10px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 10%;
+    width: 100%;
+}
+
+#second-footer-row {
+    width: 55%;
+    margin-left: 24%;
+    margin-bottom: 2%;
+}
+
+.footer-side-end {
+    margin-right: 10vw;
+}
+
+.footer-item {
+    margin: 2% 4%;
+}
+
+.footer-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.footer-button {
+    border-bottom: 1px solid #007bff91;
+    border-radius: 0px;
+    height: 65%;
+    width: 16%;
+    text-align: center;
+    margin: 1% 3% 1% 5%;
+    padding: 1% 0 1% 0;
+}
+
+.footer-button:hover {
+    border-bottom: 5px solid #0004ff88;
+    color: black;
+    /* box-shadow:  0 4px 2px -2px #0000ff2e; */
+    /* background-color: #65c0fd; */
+    font-size: 110%;
+    font-weight: bold;
+}
+
+.footer-icon {
+    width: 27%;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.side-footer {
+    width: 15%;
+    padding: 2% 0 0 2%;
+}
+
+#block-side-end {
+    /* display: none; */
+    margin: 4% 0 1% 10%;
+    justify-content: center;
+    align-content: space-around;
+    display: flex;
+}
+
+#flex-side-end {
+    display: none;
+}
+
+.footer-contact {
+    /* margin: 0 12% 0 5%; */
+    padding: 1% 3% 0 3%;
+    ;
+    border-right: 1px solid #0000ff7a;
+    height: 21px;
+}
+
+.footer-contact-tail {
+    border-right: none;
+}
+
+.logo-img-footer {
+    cursor: pointer;
+    width: 130%;
+}
+
+.social-media-icon {
+    width: 47%;
+}
+
+.site-map {
+    justify-content: center;
+    display: flex;
+    margin: 3% 0 1% 0;
+}
+
+.site-map-column {
+    margin: 0 1%;
+    text-align: center;
+    border: 1px solid rgb(116 169 254);
+    padding: 1px 3px 1px 3px;
+    border-radius: 10px;
+}
+
+.site-map-column p {
+    margin-bottom: 18%;
+}
+
+.site-map-column-title {
+    font-weight: bold;
+    border-bottom: 3px solid #0000ff75;
+    font-style: italic;
+}
+
+.site-map-column-subtitle a {
+    color: #034791;
+}
+
+
+/* .site-map-column p {
+    align-content: center;
+} */
+
+
+/* ----------------------------------- */
+
+
+/* ---------------------------------- */
+
+
+/* --------- Media queries ----------- */
+
+
+/* Smartphones  ----------- */
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+    /* STYLES GO HERE */
+    body {
+        min-height: 450px;
+    }
+    .hamburger {
+        display: none;
+    }
+    .logo-img {
+        width: 12vw;
+        height: 11vw;
+    }
+    .nav_header {
+        height: 13vw;
+    }
+    .hamburger_button_inner {
+        width: 32px;
+        height: 3px;
+        background-color: black;
+        margin: 6px 0;
+    }
+    .change.bar1 {
+        -webkit-transform: rotate(-44deg) translate(-7px, 7px);
+        transform: rotate(-44deg) translate(-7px, 7px);
+        transition: 0.5s;
+    }
+    .change.bar2 {
+        opacity: 0;
+    }
+    .change.bar3 {
+        -webkit-transform: rotate(43deg) translate(-5px, -6px);
+        transform: rotate(43deg) translate(-5px, -6px);
+        transition: 0.5s;
+    }
+
+    .my_navbar li {
+        font-size: 14px;
+    }
+
+
+    /* .................... */
+    .welcome-text {
+        font-size: 18px;
+    }
+    .built-by-python {
+        top: 55%;
+        left: 65%;
+    }
+    .django-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .built-by-python-text {
+        font-size: 16px;
+    }
+
+
+    /* ........................ */
+
+
+    .card-wrap {
+        display: none;
+    }
+    .card-wrap-vertical {
+        display: block;
+        width: 63%;
+        margin-left: 16%;
+        margin-right: 1%;
+        margin-bottom: 7%;
+    }
+    .card-img {
+        width: 98%;
+        height: 54%;
+        margin: 1% 1% 0 1%;
+    }
+    .container-vertical {
+        display: block;
+        margin-left: 15px;
+        min-width: 200px;
+        min-height: 660px;
+    }
+    .row-vertical {
+        display: block;
+    }
+    .card-text-content {
+        margin: 0 3.5px;
+    }
+    .card-text-title {
+        margin-top: 7px;
+    }
+    .card-img-photo {
+        /* width: 37vw;
+        margin-left: 1vw;
+        margin-right: 1vw; */
+    }
+
+    /* -------- profile -------- */
+    
+    .samller {
+        /* display: block; */
+    }
+    .larger {
+        display: none;
+    }
+    .user-info-column p {
+        display: inline-flex;
+        /* justify-content: space-between; */
+        width: 100%;
+    }
+    .edit-profile-icon-span {
+        width: 100%;
+        margin-left: 10%;
+        display: inline-flex;
+        
+    }
+    
+    .profile-card {
+        display: block;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        height: 100%;
+        width: 88vw;
+    }
+    .profile-card-photo {
+        margin-left: 30%;
+        width: 34vw;
+        height: 34vw;
+        margin-bottom: 2%;
+    }
+    .change-profile-pic-text {
+        display: block;
+        text-align: center;
+    }
+    .edit-profile-icon {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 0;
+        margin-top: 23%;
+    }
+    .edit-text {
+        margin-left: 1%;
+    }
+
+   
+
+    /*  */
+    /* footer */
+    .footer {
+        font-size: 9px;
+        /* height: 260px; */
+        height: 300px;
+        margin-top: 20%;
+    }
+    .footer>.my-row {
+        margin-left: 5vw;
+        margin-right: 5vw;
+    }
+    .side-footer {
+        padding: 2% 0 0 0;
+        width: 10%;
+    }
+    .footer-button {
+        width: 22%;
+    }
+    .footer-side-end {
+        margin-right: 2vw;
+        width: 76%;
+    }
+    #block-side-end {
+        /* align-content: space-around;
+        display: flex; */
+        /* font-size: 8px; */
+    }
+    #flex-side-end {
+        display: none;
+    }
+    .footer-row-wrap {
+        width: 100%;
+        margin-left: 0%;
+    }
+}
+
+
+
+
+@media only screen and (min-width: 480px) and (max-width: 560px) {
+    body {
+        min-height: 300px;
+    }
+    .logo-img {
+        width: 9vw;
+        height: 8vw;
+    }
+    .card-wrap {
+        display: none;
+    }
+    .card-wrap-vertical {
+        display: block;
+        width: 63%;
+        margin-left: 16%;
+        margin-right: 1%;
+        margin-bottom: 7%;
+    }
+    .container-vertical {
+        display: block;
+        margin-left: 15px;
+        /* max-width: 100%;
+        max-height: 170vw; */
+        min-width: 200px;
+        min-height: 660px;
+    }
+    .row-vertical {
+        display: block;
+    }
+
+    .my_navbar li {
+        font-size: 14px;
+    }
+
+
+
+    /* .................... */
+
+
+    .welcome-text {
+        font-size: 18px;
+    }
+    .built-by-python {
+        top: 38%;
+        left: 75%;
+        
+    }
+    .django-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .built-by-python-text {
+        font-size: 16px;
+    }
+
+
+    /* ........................ */
+
+
+
+    .card-img {
+        /* height: 137px;
+        width: 216px; */
+        width: 98%;
+        height: 54%;
+        margin: 1% 1% 0 1%;
+        transition: width 1s, height 1s, border 1s;
+    }
+    .card-img-photo {
+        width: 100%;
+        height: 100%;
+        border-radius: 7px;
+    }
+    .card-text-content {
+        width: 100%;
+    }
+    .card-text-content {
+        margin: 0 3.5px;
+    }
+    .card-text-title {
+        margin-top: 7px;
+    }
+
+
+    /* ----- profile ----- */
+    
+    
+    
+    .profile-card {
+        display: block;
+        margin-top: 2%;
+        margin-bottom: 2%;
+        height: 100%;
+        width: 88vw;
+    }
+    .profile-card-photo {
+        margin-left: 30%;
+        width: 34vw;
+        height: 34vw;
+        margin-bottom: 2%;
+    }
+    .change-profile-pic-text {
+        display: block;
+        text-align: center;
+    }
+    .edit-profile-icon {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 0;
+        margin-top: 23%;
+    }
+    .edit-text {
+        margin-left: 1%;
+    }
+
+    /* ----------- */
+
+
+    .footer {
+        /* height: 315px; */
+        height: 415px;
+        margin-top: 32%;
+    }
+    .side-footer {
+        padding: 2% 0 0 0%;
+        width: 10%;
+    }
+    .footer-button {
+        width: 21%;
+    }
+    #block-side-end {
+        display: flex;
+        margin: 4% 0 1% 4%;
+        align-content: center;
+    }
+    #flex-side-end {
+        display: none;
+    }
+    .footer>.my-row {
+        margin-left: 3vw;
+        margin-right: 2vw;
+    }
+    #second-footer-row {
+        margin-left: 17%;
+    }
+    .footer-contact {
+        padding: 0% 3% 3% 3%;
+    }
+}
+
+@media only screen and (min-width: 560px) and (max-width: 768px) {
+    body {
+        min-height: 300px;
+    }
+    .nav_header {
+        height: 10vw;
+    }
+    .logo-img {
+        width: 9vw;
+        height: 8vw;
+    }
+    #block-side-end {
+        display: flex;
+        margin: 4% 4% 1% 4%;
+        align-content: center;
+    }
+    #flex-side-end {
+        display: none;
+    }
+    .my_navbar li {
+        font-size: 14px;
+    }
+
+    /* ........................... */
+    
+    .welcome-text {
+        font-size: 20px;
+    }
+    .built-by-python {
+        top: 38%;
+        left: 75%;
+        
+    }
+    .django-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .built-by-python-text {
+        font-size: 16px;
+    }
+
+    /* ..................... */
+
+    /* ----- profile ----- */
+
+    .profile-content-wrap {
+        margin-right: 4%;
+        margin-left: 4%;
+    }
+    
+    .profile-card {
+        
+        /* margin-top: 2%;
+        margin-bottom: 2%; */
+        height: 100%;
+        
+    }
+    .profile-card-photo {
+        
+        width: 28vw;
+        height: 28vw;
+        
+    }
+    
+    .edit-profile-icon {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 0;
+        margin-top: 23%;
+    }
+    .edit-text {
+        margin-left: 1%;
+    }
+
+    /* ----------- */
+    .footer>.my-row {
+        margin-left: 4vw;
+        margin-right: 8vw;
+    }
+    .footer {
+        /* height: 350px; */
+        height:428px;
+    }
+    #second-footer-row {
+        margin-left: 21%;
+    }
+    .side-footer {
+        padding: 2% 0 0 0%;
+        width: 10%;
+    }
+    .footer-contact {
+        padding: 0% 3% 3% 3%;
+    }
+}
+
+
+/* iPads  ----------- */
+
+@media only screen and (min-width: 768px) and (max-width: 918px) {
+    body {
+        min-height: 380px;
+    }
+    /* ------ profile ----- */
+
+    .profile-content-wrap {
+        margin-right: 7%;
+        margin-left: 7%;
+    }
+    .profile-card {
+        
+        /* margin-top: 2%;
+        margin-bottom: 2%; */
+        height: 100%;
+        
+    }
+    .profile-card-photo {
+        
+        width: 25vw;
+        height: 25vw;
+        
+    }
+    
+    .edit-profile-icon {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 0;
+        margin-top: 23%;
+    }
+    .edit-text {
+        margin-left: 1%;
+    }
+
+    .my_navbar li {
+        font-size: 14px;
+    }
+    /* --------  */
+
+
+    /* ........................... */
+    
+    .welcome-text {
+        font-size: 20px;
+    }
+    .built-by-python {
+        top: 64%;
+        left: 82%;
+        
+    }
+    .django-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .built-by-python-text {
+        font-size: 16px;
+    }
+
+    /* ..................... */
+
+
+    .footer {
+        height: 380px;
+        
+        font-size: 12px;
+    }
+    .footer>.my-row {
+        margin-right: 8vw;
+    }
+    .logo-img-footer {
+        width: 85%;
+    }
+    #second-footer-row {
+        width: 55%;
+        margin-left: 21%;
+    }
+    .side-footer {
+        width: 10%;
+        padding: 1% 0 0 0%;
+    }
+    #flex-side-end {
+        margin-left: 2%;
+    }
+    .footer-row-wrap {
+        margin-left: 1%;
+    }
+    #block-side-end {
+        margin: 4% 4% 1% 4%;
+    }
+    .footer-contact {
+        padding: 0% 3% 3% 3%;
+    }
+}
+
+@media only screen and (min-width: 918px) and (max-width: 1024px) {
+    /* STYLES GO HERE */
+
+    
+    /* ------ profile ----- */
+
+    .profile-content-wrap {
+        margin-right: 7%;
+        margin-left: 7%;
+    }
+
+    .profile-card {
+        
+        /* margin-top: 2%;
+        margin-bottom: 2%; */
+        height: 100%;
+        
+    }
+    .profile-card-photo {
+        
+        width: 23vw;
+        height: 23vw;
+        
+    }
+    
+    .edit-profile-icon {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 0;
+        margin-top: 23%;
+    }
+    .edit-text {
+        margin-left: 1%;
+    }
+
+    /* ........................... */
+    
+    .welcome-text {
+        font-size: 30px;
+    }
+    .built-by-python {
+        top: 68%;
+        left: 83%;
+    }
+    .django-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .built-by-python-text {
+        font-size: 16px;
+    }
+
+    /* ..................... */
+    /* --------  */
+
+
+    .footer {
+        height: 410px;
+        font-size: 12px;
+    }
+    .footer>.my-row {
+        margin-right: 8vw;
+    }
+    #second-footer-row {
+        margin-left: 19%;
+    }
+    .side-footer {
+        width: 14%;
+        padding-top: 1%;
+    }
+    .logo-img-footer {
+        width: 85%;
+    }
+    #flex-side-end {
+        margin-left: 2%;
+    }
+    .footer-row-wrap {
+        margin-left: 1%;
+    }
+    #block-side-end {
+        margin: 4% 0 1% 1%;
+        ;
+    }
+    .footer-contact {
+        padding: 0.5% 3% 3% 3%;
+    }
+}
+
+
+/* Desktops and laptops ----------- */
+
+@media only screen and (min-width: 1024px) {
+    /* STYLES GO HERE */
+    .logo-img {
+        width: 28%;
+    }
+    .home-wrap {
+        margin-left: 9%;
+        margin-right: 9%;
+    }
+
+    .card-wrap  {
+        height: 17.5vw;
+    }
+
+
+    /* .............. */
+   
+    .built-by-python {
+        top: 64%;
+        left: 82%;
+        
+    }
+    .django-logo {
+        width: 50px;
+        height: 50px;
+    }
+    .built-by-python-text {
+        font-size: 16px;
+    }
+
+
+    /* .................. */
+
+
+
+    /* ------ profile ----- */
+    
+    .profile-content-wrap {
+        margin-right: 5%;
+        margin-left: 5%;
+    }
+
+    .profile-card {
+        
+        /* margin-top: 2%;
+        margin-bottom: 2%; */
+        height: 100%;
+        
+        
+    }
+    .profile-card-photo {
+        
+        width: 21vw;
+        height: 21vw;
+        
+    }
+    
+    .edit-profile-icon {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 0;
+        margin-top: 23%;
+    }
+    .edit-text {
+        margin-left: 1%;
+    }
+    /* --------------- */
+    
+
+    .footer {
+        height: 440px;
+        
+        font-size: 12px;
+    }
+    .footer>.my-row {
+        margin-left: 10vw;
+        margin-right: 10vw;
+    }
+    .side-footer {
+        width: 14%;
+        padding: 1% 0 0 2%;
+    }
+    .logo-img-footer {
+        cursor: pointer;
+        width: 55%;
+    }
+    .footer-row-wrap {
+        width: 80%;
+        margin-left: 0%
+    }
+    .footer-row-wrap {}
+    #first-footer-row {
+        max-height: 40px;
+        margin-right: 0px;
+        margin-left: 0px;
+        margin-bottom: 4%;
+        width: 100%;
+    }
+    #second-footer-row {
+        width: 55%;
+        margin-left: 19%;
+    }
+    .footer-item {
+        margin: 2% 4%;
+    }
+    .footer-button {
+        width: 16%;
+        text-align: center;
+        padding: 1% 3% 1% 3%;
+        margin: 1% 5% 1% 5%;
+    }
+    #block-side-end {
+        margin: 4% 0 1% 1%;
+        ;
+    }
+    .footer-contact {
+        padding: 0.5% 3% 3% 3%;
+    }
+}
+
+
+
+@media only screen and (min-width: 1229px) {
+    .logo-img {
+        width: 26%;
+    }
+
+    .card-wrap  {
+        height: 16.5vw;
+    }
+
+    /* ------ profile ----- */
+    
+    .profile-content-wrap {
+        margin-right: 16%;
+        margin-left: 11%;
+    }
+    .profile-card {
+        
+        /* margin-top: 2%;
+        margin-bottom: 2%; */
+        height: 100%;
+        width: auto;
+        
+    }
+    .profile-card-photo {
+        
+        width: 18vw;
+        height: 18vw;
+        
+    }
+    
+    .edit-profile-icon {
+        width: 15px;
+        height: 15px;
+        margin-bottom: 0;
+        margin-top: 23%;
+    }
+    .edit-text {
+        margin-left: 1%;
+    }
+    /* ------------- */
+
+
+    .footer {
+        /* height: 430px; */
+        height: 34vw;
+        
+    }
+    .footer>.my-row {
+        margin-left: 10vw;
+        margin-right: 14vw;
+    }
+    .footer-row-wrap {
+        margin-left: 0%;
+        width: 65%;
+    }
+    .logo-img-footer {
+        width: 52%;
+    }
+    .side-footer {
+        width: 16%;
+        padding: 1% 0 0 2%;
+    }
+    #second-footer-row {
+        width: 55%;
+        margin-left: 19%;
+    }
+    #block-side-end {
+        margin: 4% 0 1% 1%;
+        ;
+    }
+    .footer-contact {
+        padding: 0.5% 3% 2% 3%;
+    }
+}
+
+@media only screen and (min-width: 1429px) {
+    .logo-img {
+        width: 24%;
+    }
+
+    .card-wrap  {
+        height: 16.5vw;
+    }
+
+    .footer {
+        height: 480px;
+    }
+    .footer>.my-row {
+        margin-left: 10vw;
+        margin-right: 15vw;
+    }
+    .footer-row-wrap {
+        margin-left: 0%;
+        width: 65%;
+    }
+    .side-footer {
+        width: 16%;
+        padding: 1% 0 0 2%;
+    }
+    .logo-img-footer {
+        width: 52%;
+    }
+    #second-footer-row {
+        width: 55%;
+        margin-left: 20%;
+    }
+    #block-side-end {
+        margin: 4% 0 1% 1%;
+        ;
+    }
+    .footer-contact {
+        padding: 0.5% 3% 1.8% 3%;
+    }
+}
+
+
+/* ......height media queries.......... */
+/* 1366 */
+
+
+
+
+/* -------------------------------------------------------- */
+/*  legacy media quereis */
+
+/* --------------------------------------------------------- */
+
+@media only screen and (min-width: 480px) and (max-width: 768px) {
+    /* STYLES GO HERE */
+    .hamburger {
+        display: none;
+    }
+    .home-img-wrap {
+        height: 30vh;
+    }
+    .footer {
+        font-size: 12px;
+    }
+    .logo-img-footer {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .hamburger_button {
+        display: block;
+    }
+    .drop_menu {
+        display: block;
+    }
+    .drop_menu_list {
+        overflow: hidden;
+        max-height: 0;
+        border-radius: 3px;
+        transition: max-height 0.3s ease-in, border 0.3s ease-out, box-shadow 0.3s ease-out;
+        /* [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
+        box-shadow: 3px 5px 10px 5px #88888842;
+        opacity: 0;
+    }
+}
+
+@media only screen and (min-device-width: 768px) {
+    .profile-drop-menu {
+        padding: 0 80%;
+        overflow: hidden;
+        max-height: 0px;
+        border-radius: 3px;
+        transition: max-height 0.3s ease-in, border 0.3s ease-out, box-shadow 0.3s ease-out;
+        /* [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
+        box-shadow: 3px 5px 10px 5px #88888842;
+        opacity: 0;
+    }
+}

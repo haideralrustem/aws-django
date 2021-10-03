@@ -1,0 +1,224 @@
+{% extends "app1/base.html" %}
+
+{% load static %}
+{% static "csv_files/data2.csv" %}
+
+{% block children %}
+<script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<script src="{% static 'app1/jquery-ui-1.12.1.custom/jquery-ui.js' %}"></script>
+
+<!-- Color scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- drsg scroll -->
+<script src="{% static 'app1/dragscroll-master/dragscroll.js' %}"></script>
+
+
+<div class="project-page-wrapper">
+   
+    <!-- <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> -->
+
+    <div>
+      <button class="back-button" onclick="plot_back_button()"><span style="margin-right: 10%;">
+        <img class="back-button-img" src='{% get_media_prefix %}back_arrow.png'></span> <span>Back</span>
+      </button>
+      <p class="plot-result-title">Results:</p>
+    </div>
+    
+    
+    <div class='svg-outer-wrap plot-viewer'>
+        <div class="svg-wrap">
+            <div id='svg-container'>
+
+                <div id="image-preview" class="image-preview dragscroll">
+                    <img id="main_graph" src="{% get_media_prefix %}generated_plot.png">
+                </div>
+
+                <div id="bottom-panel-modal" class=''> 
+                    <button class="btn btn-primary" onclick=" click_download()">
+                      DOWNLOAD Image
+                    </button>   
+                    
+                    <div onmousedown="slider_mousedown(this)" class="size-slider-container">
+                      <div class="size_slider_label">Size : <span></span>X</div>
+                      <div id="slider"></div>
+                    </div>
+                </div>
+
+            </div>          
+        </div>
+
+    </div>
+
+    
+    <!-- <div id="slider-container">
+        
+        <div id="slider-label-wrap">
+
+            <div id="label-slider1"></div>
+            <div id="label-slider2"></div>
+        </div>
+        <div id="slider1" class="slider"></div> -->
+        
+        <!-- <div>Max</div>
+        <div id="label-slider-max">Max !</div>
+        <div id="slider-max" class="slider"></div> -->
+
+
+    </div>
+        
+  
+</div>
+
+<script>
+    
+    var src = "{% get_media_prefix %}generated_plot.png";
+    imageObject = document.getElementById("main_graph");
+    imageObject.style.display = 'inline-block';
+    imageObject.src = src;  
+    // alert(src);
+    
+</script>
+
+<script>
+    var original_w = 0;  // original width of the img
+    var original_h = 0;
+    var scaling = 1;  // same as  ui.value
+    var img_width;
+    var img_height;
+    function slider_mousedown(clicked) {
+      event.stopPropagation();
+    }
+  
+  
+    var prev_src = "{% get_media_prefix %}generated_plot.png";
+    imageObject = document.getElementById("main_graph");
+    // imageObject.style.display = 'inline-block';
+    imageObject.src = prev_src;
+  
+    let download = function(){
+      let link = document.createElement('a');
+      link.download = 'generated_plot.png';
+      link.href = src;
+      link.click();
+    }
+  
+  
+    function click_download(){
+      download();   
+    }
+  
+    
+  </script>
+  
+  
+  <!-- slider action -->
+  <script>
+    var prev_img_scale = [];
+    let midpoint = 1;
+    let calc_width = 1;
+    let calc_height=1;
+    
+    $(document).ready(
+      function(){
+        original_w = $('#main_graph').width();
+        original_h = $('#main_graph').height();
+      }
+
+      
+    );
+
+    
+    window.addEventListener('resize', function(event) {
+      $('#image-preview').removeClass('image-preview');
+      $('#image-preview').addClass('image-preview');
+      $('#main_graph').css({"width": "85%"});
+      $('#main_graph').css({"height": "auto"});
+      
+
+    }, true);
+
+    
+    $( function() {
+      $( "#slider" ).slider(
+        {
+          max: 2.0,
+          min: 0.20,
+          step: 0.1,
+          value: midpoint,
+          create: function( event, ui ) {
+            $('.size_slider_label span').html(midpoint);
+          },
+          slide: function( event, ui ) {
+            $('.size_slider_label span').html(ui.value);
+            scaling = ui.value;        
+            calc_width = original_w * ui.value;
+            calc_height = original_h * ui.value;
+            $('#main_graph').width(calc_width);
+            $('#main_graph').height(calc_height);
+
+            img_width = $('#main_graph').width();
+            img_height = $('#main_graph').height();
+  
+          }
+        }
+      );
+    } );
+  
+  
+    let slider_value = $( "#sldier" ).slider( "option", "value" );
+    console.log(slider_value);
+  </script>
+  
+  
+
+
+<script>
+    
+    // var received_data = '{{ debug_vars.json_string_dict|safe }}';
+    let parsed_data = null;
+   
+    parsed_data = JSON.parse('{{json_recieved_data|safe}}')
+    
+    console.log('parsed>>>>>>', parsed_data)
+           
+    
+    var chart_type = '{{chart_type|safe}}'
+    var x_name = '{{x_name|safe}}'
+    var y_name = '{{y_name|safe}}'
+    var dtypes= JSON.parse('{{json_current_dtypes_values|safe}}')
+    
+    var file_path = ',,';
+
+</script>
+
+<script>
+  function plot_back_button() {
+    window.history.back();
+  }
+</script>
+
+<!-- scroll dragger -->
+<script>
+  
+  $(document).ready(function() {
+    
+  
+
+  });
+
+
+</script>
+
+
+
+<script src="{% static 'app1/project1_javascript.js' %}"></script>
+
+{% endblock children %}
