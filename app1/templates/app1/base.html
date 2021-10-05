@@ -41,7 +41,7 @@
 
             <div class="nav_together">
 
-                <a class="logo-img" href="{{home_url}}">
+                <a class="logo-img" href="{{url_context.home_url}}">
                     <img class="logo-img" src="{% get_media_prefix %}my_logo2.png">
                 </a>
             
@@ -161,7 +161,7 @@
         
         <div class="footer-row-wrap">
             <div id='first-footer-row' class="my-row footer-row"> 
-                <div class="footer-item footer-button"><a href="{{home_url}}">Home</a></div>
+                <div class="footer-item footer-button"><a href="{{url_context.home_url}}">Home</a></div>
                 <div class="footer-item footer-button"><a href="{% url 'app1:app1-about' %}">About</a></div>
                 <div class="footer-item footer-button"><a href="https://haideralrustem.github.io/#/contact" target="_blank">Contact</a></div>
                 <div class="footer-item footer-button" style="width:30%"><a href="https://haideralrustem.github.io/" target="_blank">Landing Page</a></div>
