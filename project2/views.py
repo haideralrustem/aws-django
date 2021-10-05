@@ -19,6 +19,8 @@ import csv
 
 import text_classification as tc
 
+import main_urls
+
 
 
 
@@ -133,7 +135,7 @@ def analyze_text(request):
 
 def intro(request):
     context = {'BASE_DIR': settings.BASE_DIR}
-
+    context['url_context'] = main_urls.url_context
     return render(request, 'project2/intro.html', context)
 
 # ............................
@@ -143,6 +145,7 @@ def text_analyzer_main(request):
 
     u_form = UploadedDataFormHandler()
     context['u_form'] = u_form
+    context['url_context'] = main_urls.url_context
     # json_recieved_data = json.dumps(deliver_modded_rows)
 
     return render(request, 'project2/text_analyzer_main.html', context)

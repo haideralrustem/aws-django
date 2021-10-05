@@ -48,9 +48,9 @@
             
             
             <ul class="nav_links my_navbar centering hamburger">
-                <li ><a href="{{project1_url}}">Project Simple Grapher</a></li>
-                <li><a href="{{project2_url}}">Project Text Analyzer</a></li>
-                <li ><a href="{{food_suggester_url}}">Project Food Suggester</a></li>
+                <li ><a href="{{url_context.project1_url}}">Project Simple Grapher</a></li>
+                <li><a href="{{url_context.project2_url}}">Project Text Analyzer</a></li>
+                <li ><a href="{{url_context.food_suggester_url}}">Project Food Suggester</a></li>
                 <li><a href="{% url 'app1:app1-about' %}">About</a></li>
                 
             </ul>
@@ -111,9 +111,9 @@
             
             
                 <ul id="drop_menu_list" class="drop_menu_list" >
-                    <li><a href="{{project1_url}}">Project Simple Grapher</a></li> 
-                    <li><a href="{{project2_url}}">Project Text Analyzer</a></li> 
-                    <li ><a href="{{food_suggester_url}}">Project Food Suggester</a></li>
+                    <li><a href="{{url_context.project1_url}}">Project Simple Grapher</a></li> 
+                    <li><a href="{{url_context.project2_url}}">Project Text Analyzer</a></li> 
+                    <li ><a href="{{url_context.food_suggester_url}}">Project Food Suggester</a></li>
                     
                     <li><a href="{% url 'app1:app1-about' %}" target="_blank">About</a></li>
                     
@@ -196,15 +196,15 @@
             <div class="site-map-column">
                 <p class="site-map-column-title">Projects</p>
                 <p class="site-map-column-subtitle">
-                    <a href="{{project1_url}}">Simple Grapher</a>
+                    <a href="{{url_context.project1_url}}">Simple Grapher</a>
                 </p>
                
                 <p class="site-map-column-subtitle">
-                    <a href="{{project2_url}}">Text Analyzer</a>
+                    <a href="{{url_context.project2_url}}">Text Analyzer</a>
                 </p>
 
                 <p class="site-map-column-subtitle">
-                    <a href="{{food_suggester_url}}">Food Suggester</a>
+                    <a href="{{url_context.food_suggester_url}}">Food Suggester</a>
                 </p>
                 
             </div>

@@ -22,6 +22,7 @@ from datetime import datetime, time, timedelta
 import time
 import string
 import csv
+import main_urls
 # import sys
 # sys.path.append("..")
 # import my_functions
@@ -403,7 +404,8 @@ def generate_plot(request):
 # Create your views here.
 
 def data_file_upload(request):
-       
+
+    
     global persistent_data_state
     if request.method == 'POST' and not request.is_ajax():  # file upload 
         
@@ -543,7 +545,8 @@ def data_file_upload(request):
         request.session['serialized_modded_rows'] = serialized_modded_rows
         request.session['strip_headers'] = strip_headers
        
-       
+        context['url_context'] = main_urls.url_context
+
         return render(request, 'project1/presets_config.html', context)
 
     else:
@@ -553,6 +556,7 @@ def data_file_upload(request):
         context = {'uploaded_file': 'no file uploaded yet',
                     'change_dtype_form': change_dtype_form,
                   }
+        context['url_context'] = main_urls.url_context
         return render(request, 'project1/presets_config.html', context)
 
 
@@ -618,6 +622,8 @@ def main_page_viz(request):
         'json_current_dtypes_values': json_current_dtypes_values      
     }
 
+    context['url_context'] = main_urls.url_context
+
     
 
     # return render(request, 'project1/main_page.html', context)
@@ -631,12 +637,13 @@ def intro(request):
     context = {}
 
     
-    
+    context['url_context'] = main_urls.url_context
     return render(request, 'project1/intro.html', context)
 
 
 # .......................
 
 def testing_page(request):
-        
+    context={}
+    context['url_context'] = main_urls.url_context
     return render(request, 'project1/testing_page.html', {})

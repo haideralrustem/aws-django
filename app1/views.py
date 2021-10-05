@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Info
 
 from django.http import HttpResponse   # me
+import main_urls
+
 
 
 pulled_data = [
@@ -18,20 +20,14 @@ pulled_data = [
 ]
 
 
-context = {
-    'project1_url': 'http://ec2-3-20-48-103.us-east-2.compute.amazonaws.com/project1/intro',
-    'project2_url' : 'http://ec2-3-20-48-103.us-east-2.compute.amazonaws.com/project2',
-    'food_suggester_url': 'https://haiderapps.herokuapp.com/',
-    'home_url': 'https://haiderapps.herokuapp.com/project1/food_suggester',
-
-}
 
 
 # Create your views here.
 
 def home(request):
-
+    context = {}
     
+    context['url_context'] = main_urls.url_context
 
     return render(request,
                   'app1/home.html',  # template name
@@ -42,14 +38,9 @@ def home(request):
 
 def about(request):
 
-    # context = {
-    #     'pulled_data': pulled_data
-    # }
-
-    context2 = {
-        'pulled_data': Info.objects.all()
-    }
-
+    context = {}
+    context['url_context'] = main_urls.url_context
+        
     return render(request, template_name='app1/about.html', context=context)
 
 #...............
