@@ -18,12 +18,24 @@ pulled_data = [
 ]
 
 
+context = {
+    'project1_url': 'http://ec2-3-20-48-103.us-east-2.compute.amazonaws.com/project1/intro',
+    'project2_url' : 'http://ec2-3-20-48-103.us-east-2.compute.amazonaws.com/project2',
+    'food_suggester_url': 'https://haiderapps.herokuapp.com/',
+    'home_url': 'https://haiderapps.herokuapp.com/project1/food_suggester',
+
+}
+
+
 # Create your views here.
 
 def home(request):
 
+    
+
     return render(request,
                   'app1/home.html',  # template name
+                  context
                   )
 
 #........
@@ -38,7 +50,7 @@ def about(request):
         'pulled_data': Info.objects.all()
     }
 
-    return render(request, template_name='app1/about.html', context=context2)
+    return render(request, template_name='app1/about.html', context=context)
 
 #...............
 
