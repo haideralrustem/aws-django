@@ -42,9 +42,9 @@ def home(request):
 
 def about(request):
 
-    context = {
-        'pulled_data': pulled_data
-    }
+    # context = {
+    #     'pulled_data': pulled_data
+    # }
 
     context2 = {
         'pulled_data': Info.objects.all()
