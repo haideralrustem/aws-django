@@ -1,5 +1,5 @@
-from django.urls import path
-from django.conf.urls  import url
+from django.urls import path, re_path
+
 from . import views
 
 app_name = 'my_users'  # me
@@ -11,9 +11,9 @@ urlpatterns = [
     path('register2', views.register2, name='my_users-register2'),
     path('profile', views.user_profile, name='profile'),
 
-    url('testing/(?P<p>\d+)', views.testing, name="testing"),
+    re_path('testing/(?P<p>\d+)', views.testing, name="testing"),
 
-    url('post/ajax/update_userform', 
+    re_path('post/ajax/update_userform', 
         views.test_updateUserForm, name="test_post_update_userform"),
     
     path('post/ajax/userform', views.postUserForm, name='post_userform'),

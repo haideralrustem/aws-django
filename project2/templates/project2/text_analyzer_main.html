@@ -337,21 +337,21 @@ $('#u_form').submit(function (e) {
             // -> trigger the GET Request here if needed            
               
           },
-          error: function (response) {
+          error: function (jqXHR, textStatus, errorThrown) {
               // alert the error if any error occured
 
-              console.log('>> error occured in analyze_text! :\n', response);
-              console.log(response["responseJSON"]);
-              console.log(response["responseJSON"]["text_value"]);
-              console.log(response["responseJSON"]["msg"]);
-              console.log(typeof(response["responseJSON"]["text_value"]));
-              console.log((response["responseJSON"]["text_value"].length));
+              console.log("jqXHR.status = ", jqXHR.status);
+              console.log(jqXHR.responseJSON);
+              //console.log(jqXHR.responseText);
 
-              let text_val = response["responseJSON"]["text_value"];
+
+              
+
+              {% comment %} let text_val = jqXHR["responseJSON"]["text_value"]; {% endcomment %}
 
               console.log(text_val.length);
 
-              if (text_val.length == 0) {
+              {% comment %} if (text_val.length == 0) {
                 
                 $('.alert-tooltip').addClass('visible');
                 $('.alert-tooltip').addClass('show');
@@ -368,7 +368,7 @@ $('#u_form').submit(function (e) {
                 , 3000)
 
 
-              }
+              } {% endcomment %}
 
               $('.loading-spinner').hide();
               

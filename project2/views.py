@@ -26,7 +26,7 @@ import main_urls
 
 # AJAX
 
-def analyze_text(request):
+def analyze_text_old(request):
 
     print('FGH\n\n\n')
 
@@ -129,7 +129,49 @@ def analyze_text(request):
 
     return JsonResponse({'status':'Fail', 'msg':'Not a valid request'}, status=400)
 
+#________________________________________________________________
 
+
+
+
+
+def analyze_text(request):
+
+    print('FGH\n\n\n')
+
+    word_count = 0
+    frequency_graph_data = []
+    likely_topic = ''
+    word_cloud_url = ''
+    complexity_score =  0
+    text_value = ''
+    freq_dict = ''
+    word_count = None
+    frequency_graph_data = None
+    score = None
+    percentage =None
+
+    API_KEY = 'bbabf90560c20350a1237f4b52f4189b'
+    text = "Zara is great, lots of stylish and affordable clothes, shoes, and accessories."
+    model = 'IAB_2.0_en'
+    url = "https://api.meaningcloud.com/deepcategorization-1.0"
+
+    payload={
+                    'key': API_KEY,
+                    'txt': text_value,
+                    'model': model,  # like IAB_2.0_en
+                }
+
+    print("\nBefore Request received .....")
+
+    
+
+   
+    return JsonResponse({ 'msg':'TEST was  valid'}, status=200)
+
+
+
+#-----------------------------------------------------------------------------
 
 # Create your views here.
 
