@@ -7,6 +7,7 @@ from .forms import *
 
 from django.http import JsonResponse
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 import pdb
 import json
 
@@ -17,12 +18,21 @@ import time
 import string
 import csv
 
+from dotenv import load_dotenv
+
+
+from openai import OpenAI
+
 import text_classification as tc
 
 import main_urls
 
 
+load_dotenv()
+api_key = os.getenv("API_KEY")
 
+
+print(f"\n\n Api key is {api_key} \n\n")
 
 # AJAX
 
@@ -134,7 +144,7 @@ def analyze_text_old(request):
 
 
 
-
+@csrf_exempt
 def analyze_text(request):
 
     print('FGH\n\n\n')
@@ -151,23 +161,61 @@ def analyze_text(request):
     score = None
     percentage =None
 
-    API_KEY = 'bbabf90560c20350a1237f4b52f4189b'
-    text = "Zara is great, lots of stylish and affordable clothes, shoes, and accessories."
-    model = 'IAB_2.0_en'
-    url = "https://api.meaningcloud.com/deepcategorization-1.0"
-
-    payload={
-                    'key': API_KEY,
-                    'txt': text_value,
-                    'model': model,  # like IAB_2.0_en
-                }
+    API_KEY = api_key
+    text = "First, it was 7,000. Now it’s 9,000 more. But what's interesting is they are pouring $80 billion into GPUs that never need a coffee break."
+    
+    client = OpenAI(api_key=API_KEY)
+    
 
     print("\nBefore Request received .....")
 
     
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        
+        text = data.get("text", "")
+        print(f"\nText is\n", text)
+
+        if not text:
+            return JsonResponse({"error": "No text provided."}, status=400)
+
+    
+        # Prompt: Allow multiple topics and subtopics
+        system_prompt = (
+            "You are a text classification assistant. "
+            "Given a piece of text, identify and return all relevant topics and subtopics. "
+            "Choose from: sports, entertainment, history, science, technology, politics, health, education, finance, travel, and other. "
+            "Return a JSON array like [\"sports: basketball\", \"science: physics\"]"
+        )
+
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4.1-nano",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": text}
+                ],
+                temperature=0.3,
+                max_tokens=100,
+            )
+            output = response.choices[0].message.content.strip()
+
+
+            # Try parsing JSON-like output
+            try:
+                topics = json.loads(output)
+            except json.JSONDecodeError:
+                topics = [output]  # fallback: return raw string if not proper JSON
+        
+            return JsonResponse({"topics": topics})
+        
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
 
    
-    return JsonResponse({ 'msg':'TEST was  valid'}, status=200)
+    return JsonResponse({"error": "Only POST allowed."}, status=405)
 
 
 
