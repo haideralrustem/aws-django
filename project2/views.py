@@ -162,7 +162,7 @@ def analyze_text(request):
     percentage =None
 
     API_KEY = api_key
-    text = "First, it was 7,000. Now it’s 9,000 more. But what's interesting is they are pouring $80 billion into GPUs that never need a coffee break."
+    text_value = "First, it was 7,000. Now it’s 9,000 more. But what's interesting is they are pouring $80 billion into GPUs that never need a coffee break."
     
     client = OpenAI(api_key=API_KEY)
     
@@ -171,16 +171,24 @@ def analyze_text(request):
 
     
     if request.method == "POST":
+
         data = json.loads(request.body)
 
         
-        text = data.get("text", "")
-        print(f"\nText is\n", text)
+        text_value = data.get("text", "")
+        print(f"\nText is\n", text_value)
 
-        if not text:
-            return JsonResponse({"error": "No text provided."}, status=400)
+        if not text_value or len(text_value) <= 0:
+            return JsonResponse({"error": "No text provided.", 
+                                "msg": "No text provided.",
+                                'text_value': text_value,
+                                'word_count': 0,
+                                'frequency_graph_data': None,
+                                'complexity_score': None,
+                                'likely_topic': None,
+                                'word_cloud_url': None}, status=400)
 
-    
+
         # Prompt: Allow multiple topics and subtopics
         system_prompt = (
             "You are a text classification assistant. "
@@ -190,32 +198,70 @@ def analyze_text(request):
         )
 
         try:
-            response = client.chat.completions.create(
-                model="gpt-4.1-nano",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": text}
-                ],
-                temperature=0.3,
-                max_tokens=100,
-            )
-            output = response.choices[0].message.content.strip()
+            
+            # response = client.chat.completions.create(
+            #     model="gpt-4.1-nano",
+            #     messages=[
+            #         {"role": "system", "content": system_prompt},
+            #         {"role": "user", "content": text_value}
+            #     ],
+            #     temperature=0.3,
+            #     max_tokens=100,
+            # )
 
+            # print("\n", response.choices[0], "\n")
+            
+            # output = response.choices[0].message.content.strip()
 
+            output = "[\"Topic A\", \"Topic B\"]"
+
+            print(f"\noutput :\n", output, "\n\n")
             # Try parsing JSON-like output
             try:
                 topics = json.loads(output)
+                print(f"\ntopics: {topics}\n")
             except json.JSONDecodeError:
                 topics = [output]  # fallback: return raw string if not proper JSON
-        
-            return JsonResponse({"topics": topics})
+
+
+
+
+            # text analysis pipeline goes here:
+            freq_dict, word_count = tc.word_frequency(text_value)
+            frequency_graph_data = tc.convert_to_data_array(freq_dict)
+            
+
+            score = tc.FleschReadabilityEase(text_value)
+            percentage = tc.convert_Flesch_percentage(score)
+            complexity_score = percentage
+
+            # likely_topic =  tc.predict_likely_topic(text_value)
+            #likely_topic = response.json()['category_list'][0]['label']
+
+            
+            
+            word_cloud_url = tc.generate_word_cloud(text_value)
+
+            topics_string = ", ".join(topics)
+
+            
+            return JsonResponse({"topics_array": topics, "topics_string": topics_string, 
+                                'msg': 'text_value posted successfully', 
+                                'text_value': text_value,
+                                'word_count': word_count,
+                                'frequency_graph_data': frequency_graph_data,
+                                'complexity_score': complexity_score,
+                                'likely_topic': topics_string,
+                                'word_cloud_url': word_cloud_url,
+                                'fail_reason': '' 
+                                })
         
         except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
+            return JsonResponse({"error": str(e), 'msg':'An Error Occurred while processing your request.' }, status=500)
 
 
    
-    return JsonResponse({"error": "Only POST allowed."}, status=405)
+    return JsonResponse({"error": "Only POST allowed.", 'msg':'Not a valid request'}, status=405)
 
 
 

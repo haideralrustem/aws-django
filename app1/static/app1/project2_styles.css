@@ -555,6 +555,17 @@ p {
 }
 
 
+
+#error-message {
+    visibility: hidden;
+    
+    color: red; 
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+
+
 /* ............................................... */
 
 

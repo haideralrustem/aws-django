@@ -60,9 +60,15 @@
           <button class='hidden-submit-btn' 
                                 id="analyze_text_submit" 
                                 type="submit">G</button>
+
+          
         </form>
 
+        
+
         <div id="analyze-btn-wrap">
+          <div id="error-message">-</div>
+
           <button id="analyze-btn" class="blue-button-rev" 
           onclick="analyzeText(this)">ANALYZE TEXT</button>
 
@@ -71,7 +77,9 @@
           onclick="clearAnalysis(this)">CLEAR ALL</button>
 
         </div>
+        
 
+        
 
       </div>
 
@@ -123,11 +131,8 @@
         programming language.
        </p>
        <p>
-         Text Analyzer also uses a Machine Learning API called 
-         <a href="https://learn.meaningcloud.com/developer/deep-categorization/1.0/doc/what-is-deep-categorization" target="_blank">Deep Categorization</a> offered by 
-         <a href="https://www.meaningcloud.com/" target="_blank">MeaningCloud</a>
-          to try to guess the main Subjects
-         of the entered text. The classification service is called using their REST API.
+         Text Analyzer also uses API provided by OpenAI to try to guess the main subjects
+         of the entered text.
        </p>
       
     </div>
@@ -328,6 +333,8 @@ $('#u_form').submit(function (e) {
 
             $('.loading-spinner').hide();
 
+            $("#error-message").text("-").css({"visibility": "visible"});
+
 
             // Response here can Contain the stringified changed data when
             // you implement the change datatype POST
@@ -336,14 +343,14 @@ $('#u_form').submit(function (e) {
             //submitted_form.trigger('reset');
 
             console.log('\n response on analyze_text', response)
-            console.log("\nTopics:", response.topics);
+            console.log("\nTopics:", response.topics_string);
 
 
-            {% comment %} console.log(response['text_value']) {% endcomment %}
+            
 
             // SUCCESS FEEDBACK
             let word_cloud_url = response['word_cloud_url'];
-            let likely_topic = response['likely_topic'];
+            let likely_topic = response['topics_string'];
             let complexity_score = response['complexity_score'];
             let word_count = response['word_count'];
             let frequency_graph_data = response['frequency_graph_data'];
@@ -371,55 +378,64 @@ $('#u_form').submit(function (e) {
 
             $('.word_count p').append(`<span class='emphasis-text'> ${word_count} </span>`);
             
-            console.log('\n', sliced_freq_graph_data);
-            console.log(response['fail_reason']);
+            
 
             wordFreq(sliced_freq_graph_data);
             adjustDatavizScale();
 
 
             $('#clear-btn').removeAttr('disabled');
-          
-            $('.loading-spinner').hide();
+            
+            
 
             
             // -> trigger the GET Request here if needed            
               
           },
+          
           error: function (jqXHR, textStatus, errorThrown) {
               // alert the error if any error occured
               $('.loading-spinner').hide();
               console.log("t_text =  ", t_text)
               console.log("jqXHR.status = ", jqXHR.status);
               console.log(jqXHR.responseJSON);
-              console.error("Error:", jqXHR.responseText);
+              console.log("Error:", jqXHR.responseJSON.msg);
               //console.log(jqXHR.responseText);
 
+              
+              let errorMsg = "Unknown error occurred. Contact site administrator";
+              
+              if (jqXHR.responseJSON && jqXHR.responseJSON.msg) {
+
+
+                errorMsg = jqXHR.responseJSON.msg;
+                console.log("errorMsg: ", errorMsg)
+
+              }
+
+
+              if (errorMsg.toLowerCase().includes("no text provided".toLowerCase()) ) {
+
+                  $('.alert-tooltip').addClass('visible');
+                  $('.alert-tooltip').addClass('show');
+
+                  setTimeout(function(){
+                      $('.alert-tooltip').removeClass('show');
+                    }
+                    , 2000)
+
+                  setTimeout(function(){
+                      $('.alert-tooltip').removeClass('visible');
+                    }
+                    , 5000)
+              }
+
+              else {
+                 $("#error-message").text(errorMsg).css({"visibility": "visible"});
+              }
 
               
 
-              {% comment %} let text_val = jqXHR["responseJSON"]["text_value"]; {% endcomment %}
-
-              console.log(text_val.length);
-
-              {% comment %} if (text_val.length == 0) {
-                
-                $('.alert-tooltip').addClass('visible');
-                $('.alert-tooltip').addClass('show');
-
-
-                setTimeout(function(){
-                  $('.alert-tooltip').removeClass('show');
-                }
-                , 2000)
-
-                setTimeout(function(){
-                  $('.alert-tooltip').removeClass('visible');
-                }
-                , 3000)
-
-
-              } {% endcomment %}
 
               $('.loading-spinner').hide();
               
