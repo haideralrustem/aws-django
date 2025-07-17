@@ -137,7 +137,11 @@ def word_frequency(text):
 
     # pdb.set_trace()
     stop_words = set(stopwords)
-    text_words = [w for w in text_words if not w.lower() in stop_words]
+    
+    # remove any stopwords that you don't want
+    stop_words = stop_words.difference({"like"})
+
+    text_words = [w for w in text_words if (len(w) > 1) and (w.lower() not in stop_words)  ]
 
     data_analysis = nltk.FreqDist(text_words)
     # Let's take the specific words only if their frequency is greater than 3.

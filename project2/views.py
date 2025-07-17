@@ -199,21 +199,23 @@ def analyze_text(request):
 
         try:
             
-            # response = client.chat.completions.create(
-            #     model="gpt-4.1-nano",
-            #     messages=[
-            #         {"role": "system", "content": system_prompt},
-            #         {"role": "user", "content": text_value}
-            #     ],
-            #     temperature=0.3,
-            #     max_tokens=100,
-            # )
+            response = client.chat.completions.create(
+                model="gpt-4.1-nano",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": text_value}
+                ],
+                temperature=0.3,
+                max_tokens=100,
+            )
 
-            # print("\n", response.choices[0], "\n")
+            print("\n", response.choices[0], "\n")
             
-            # output = response.choices[0].message.content.strip()
+            output = response.choices[0].message.content.strip()
 
-            output = "[\"Topic A\", \"Topic B\"]"
+
+            # use this to test static output instead of hitting the API repeatedly and consume quotas
+            # output = "[\"Topic A\", \"Topic B\"]"
 
             print(f"\noutput :\n", output, "\n\n")
             # Try parsing JSON-like output

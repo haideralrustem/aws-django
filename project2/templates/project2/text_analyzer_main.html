@@ -183,6 +183,7 @@
 
 
 function analyzeText(this_btn) {
+    
     let text = $('#txa_textarea').val();
     $('#id_text_value').val(text);
     
@@ -335,53 +336,63 @@ $('#u_form').submit(function (e) {
 
             $("#error-message").text("-").css({"visibility": "visible"});
 
+            try {
 
-            // Response here can Contain the stringified changed data when
-            // you implement the change datatype POST
+              // Response here can Contain the stringified changed data when
+              // you implement the change datatype POST
+                
+              // 1. clear the form.
+              //submitted_form.trigger('reset');
+
+              console.log('\n response on analyze_text', response)
+              console.log("\nTopics:", response.topics_string);
+
+
               
-            // 1. clear the form.
-            //submitted_form.trigger('reset');
 
-            console.log('\n response on analyze_text', response)
-            console.log("\nTopics:", response.topics_string);
+              // SUCCESS FEEDBACK
+              let word_cloud_url = response['word_cloud_url'];
+              let likely_topic = response['topics_string'];
+              let complexity_score = response['complexity_score'];
+              let word_count = response['word_count'];
+              let frequency_graph_data = response['frequency_graph_data'];
+              let sliced_freq_graph_data = frequency_graph_data.slice(0, 6);
+              global_data = sliced_freq_graph_data;
 
+              console.log(likely_topic)
+
+              // ->  Manipulate DOM to show data
+              let prev_src = "{% get_media_prefix %}" + word_cloud_url;
+              imageObject = document.getElementById("cloud_graph");
+              // imageObject.style.display = 'inline-block';
+              imageObject.src = prev_src;
+              
+              $('.txa-side-panel').removeClass('slides');
+              $('.txa-side-panel').addClass('slides');
+
+              $('#cloud_graph').removeClass('visible');
+              $('#cloud_graph').addClass('visible');
+
+              $('span.emphasis-text').remove();
+
+              $('.likely_topic p').append(`<span class='emphasis-text'> ${likely_topic} </span>`);
+              $('.complexity_score p').append(`<span class='emphasis-text'> ${complexity_score.toFixed(1)}% </span>`);
+
+              $('.word_count p').append(`<span class='emphasis-text'> ${word_count} </span>`);
+              
+              
+
+              wordFreq(sliced_freq_graph_data);
+              adjustDatavizScale();
+
+            } 
+            catch (error) {
+              console.log("\nThe POST REQUEST was successful, but an error occurred:\n", error.message);
+              let errorMsg = "An Error Occured analyzing your text.";
+              $("#error-message").text(errorMsg).css({"visibility": "visible"});
+            }
 
             
-
-            // SUCCESS FEEDBACK
-            let word_cloud_url = response['word_cloud_url'];
-            let likely_topic = response['topics_string'];
-            let complexity_score = response['complexity_score'];
-            let word_count = response['word_count'];
-            let frequency_graph_data = response['frequency_graph_data'];
-            let sliced_freq_graph_data = frequency_graph_data.slice(0, 6);
-            global_data = sliced_freq_graph_data;
-
-            console.log(likely_topic)
-
-            // ->  Manipulate DOM to show data
-            let prev_src = "{% get_media_prefix %}" + word_cloud_url;
-            imageObject = document.getElementById("cloud_graph");
-            // imageObject.style.display = 'inline-block';
-            imageObject.src = prev_src;
-            
-            $('.txa-side-panel').removeClass('slides');
-            $('.txa-side-panel').addClass('slides');
-
-            $('#cloud_graph').removeClass('visible');
-            $('#cloud_graph').addClass('visible');
-
-            $('span.emphasis-text').remove();
-
-            $('.likely_topic p').append(`<span class='emphasis-text'> ${likely_topic} </span>`);
-            $('.complexity_score p').append(`<span class='emphasis-text'> ${complexity_score.toFixed(1)}% </span>`);
-
-            $('.word_count p').append(`<span class='emphasis-text'> ${word_count} </span>`);
-            
-            
-
-            wordFreq(sliced_freq_graph_data);
-            adjustDatavizScale();
 
 
             $('#clear-btn').removeAttr('disabled');
@@ -396,43 +407,60 @@ $('#u_form').submit(function (e) {
           error: function (jqXHR, textStatus, errorThrown) {
               // alert the error if any error occured
               $('.loading-spinner').hide();
-              console.log("t_text =  ", t_text)
-              console.log("jqXHR.status = ", jqXHR.status);
-              console.log(jqXHR.responseJSON);
-              console.log("Error:", jqXHR.responseJSON.msg);
-              //console.log(jqXHR.responseText);
+
+              try {
+
+                console.log("t_text =  ", t_text)
+                console.log("jqXHR.status = ", jqXHR.status);
+                console.log(jqXHR.responseJSON);
+                console.log("Error:", jqXHR.responseJSON.msg);
+                //console.log(jqXHR.responseText);
+
+                
+                let errorMsg = "Unknown error occurred. Contact site administrator";
+                
+                if (jqXHR.responseJSON && jqXHR.responseJSON.msg) {
+
+
+                  errorMsg = jqXHR.responseJSON.msg;
+                  console.log("errorMsg: ", errorMsg)
+
+                }
+
+
+                if (errorMsg.toLowerCase().includes("no text provided".toLowerCase()) ) {
+
+                    $('.alert-tooltip').addClass('visible');
+                    $('.alert-tooltip').addClass('show');
+
+                    setTimeout(function(){
+                        $('.alert-tooltip').removeClass('show');
+                      }
+                      , 2000)
+
+                    setTimeout(function(){
+                        $('.alert-tooltip').removeClass('visible');
+                      }
+                      , 5000)
+                }
+
+                else {
+                  $("#error-message").text(errorMsg).css({"visibility": "visible"});
+                }
+
 
               
-              let errorMsg = "Unknown error occurred. Contact site administrator";
               
-              if (jqXHR.responseJSON && jqXHR.responseJSON.msg) {
+              } catch (error) { 
+                console.log("\nAn error occurred:\n", error.message);
+                let errorMsg = "The POST Request Was Unsuccessful. Servers might be down temporarily. Please check back again later, or contact administrator.";
+                $("#error-message").text(errorMsg).css({"visibility": "visible"});
 
-
-                errorMsg = jqXHR.responseJSON.msg;
-                console.log("errorMsg: ", errorMsg)
 
               }
 
 
-              if (errorMsg.toLowerCase().includes("no text provided".toLowerCase()) ) {
-
-                  $('.alert-tooltip').addClass('visible');
-                  $('.alert-tooltip').addClass('show');
-
-                  setTimeout(function(){
-                      $('.alert-tooltip').removeClass('show');
-                    }
-                    , 2000)
-
-                  setTimeout(function(){
-                      $('.alert-tooltip').removeClass('visible');
-                    }
-                    , 5000)
-              }
-
-              else {
-                 $("#error-message").text(errorMsg).css({"visibility": "visible"});
-              }
+              
 
               
 
