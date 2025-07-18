@@ -2,6 +2,8 @@ import matplotlib
 
 matplotlib.rcParams['axes.formatter.useoffset'] = False
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
+
 import pandas as pd
 import numpy as np
 # import plotly.express as px
@@ -18,6 +20,47 @@ import seaborn as sns
 
 
 
+
+
+
+# Format large numbers into readable units (e.g., 1K, 1M)
+def human_format(num, pos):
+
+  for unit in ['', 'K', 'M', 'B', 'T']:
+      
+      if abs(num) < 1000:
+          return f"{num:g}{unit}"
+      
+      num /= 1000
+  return f"{num:.1f}P"
+
+
+
+formatter = FuncFormatter(human_format)
+
+
+
+#---------------------------------------
+
+# Round interval to nearest "nice" number
+def round_tick_interval(val):
+    
+    
+    steps = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]
+
+    steps_distance_from_val = [abs(step - val) for step in steps]
+    # Get index and value of the min element
+    min_index, min_value = min(enumerate(steps_distance_from_val), key=lambda x: x[1])
+
+    chosen_step = steps[min_index]
+    
+    if min_value > 1000:
+      # fallback for very large values
+      chosen_step = 1000
+
+    return chosen_step  
+
+#-----------------------------------------------
 
 
 # data = [{'Category Name': '', 'loss': , 'gain':},
@@ -151,6 +194,8 @@ def single_scatter_plot(rows, x_name, y_values, dtypes_values=None, trend_line=T
 
 # ...............................
 
+
+
 def histogram(rows, x_name, y_values, dtypes_values=None):
   mu, sigma = 100, 15
   y_name = y_values[0]
@@ -165,6 +210,29 @@ def histogram(rows, x_name, y_values, dtypes_values=None):
 
   plt.hist(y_vals, density=False, bins=50)  # density=True would make probability, density=False would make counts
 
+
+  # len(y_vals)
+
+  # Compute tick range based on min/max of data
+
+  raw_min_value = int(min(y_vals))
+  raw_max_value = int(max(y_vals))
+  
+  tick_min = int(np.floor(raw_min_value / 10.0)) * 10
+  tick_max = int(np.ceil(raw_max_value / 10.0)) * 10
+
+  # Choose a reasonable interval (e.g., every 10, or 5, etc.)
+  tick_interval = int((tick_max - tick_min) // 10 or 1 ) # fallback to 1 if interval is 0
+
+
+  print(f"\n tick_interval ==>  {tick_interval}\n")
+  tick_interval = round_tick_interval(tick_interval)
+  print(f"\n tick_interval ==>  {tick_interval}\n")
+  tick_values = np.arange(tick_min, tick_max + tick_interval, tick_interval)
+  pdb.set_trace()
+  # Set the ticks manually
+  plt.xticks(tick_values)
+
   plt.xlabel(label)
   plt.ylabel(f'Count of {label}')
   # plt.title(r'Title')
@@ -174,6 +242,8 @@ def histogram(rows, x_name, y_values, dtypes_values=None):
   ax = plt.gca()
   ax.get_xaxis().get_major_formatter().set_scientific(False)
   ax.get_yaxis().get_major_formatter().set_scientific(False)
+
+  ax.yaxis.set_major_formatter(formatter)
   # plt.show()
   plt.savefig('./media/generated_plot.png')
   plt.close()
@@ -232,6 +302,7 @@ def pie_chart(rows, x_name, y_values, dtypes_values=None):
   ll_labels = [f'{l}, {s: 0.1f}%' for l, s in zip(labels, sizes)]
 
   # plt.legend(labels=ll_labels, bbox_to_anchor=(1,0) , loc="lower right", bbox_transform=plt.gcf().transFigure)
+  
 
   plt.tight_layout()
 
@@ -307,6 +378,13 @@ def bar_chart(rows, x_name, y_values, dtypes_values=None):
 
     
   # Show graph
+
+  # Apply formatter
+  if max_len_xcat >= 5:
+      ax.xaxis.set_major_formatter(formatter)
+  else:
+      ax.yaxis.set_major_formatter(formatter)
+
 
   plt.tight_layout()
   # plt.show()

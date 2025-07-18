@@ -37,7 +37,7 @@ select_options =['Decimal number', 'Whole number', 'Text', 'Date', 'Time', 'Time
 def accept_uploaded_data(request):
 
     print('\n\n\n accept_uploaded_data@  views.py has been hit \n\n\n')
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and ( request.headers.get('x-requested-with') == 'XMLHttpRequest'):
         
         u_form = UploadedDataFormHandler(request.POST)
         # save the data and after fetch the object in instance
@@ -82,7 +82,7 @@ def accept_uploaded_data(request):
 
 def auto_detect_data(request):
     global persistent_data_state
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and ( request.headers.get('x-requested-with') == 'XMLHttpRequest'):
         detect_table_format = GenericValueForm(request.POST)
 
         if detect_table_format.is_valid() and len(persistent_data_state) > 2:
@@ -152,7 +152,7 @@ def auto_detect_data(request):
 def change_col_dtype(request):
     global persistent_data_state
     print('\n\n\n change_col_dtype @  views.py has been hit \n\n\n')
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and ( request.headers.get('x-requested-with') == 'XMLHttpRequest'):
         
         u_form = GenericValueForm(request.POST)
         
@@ -231,7 +231,7 @@ def change_col_dtype(request):
 def select_chart_type(request):
     global persistent_data_state
     
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and ( request.headers.get('x-requested-with') == 'XMLHttpRequest'):
         
         
         # select_chart_type_form
@@ -310,7 +310,10 @@ def select_chart_type(request):
 
 def generate_plot(request):
     global persistent_data_state
-    if request.method == 'POST' and request.is_ajax():
+
+
+    
+    if request.method == 'POST' and ( request.headers.get('x-requested-with') == 'XMLHttpRequest'):
         
         # select_chart_type_form
         select_axis_form = GenericValueForm(request.POST)
@@ -354,7 +357,7 @@ def generate_plot(request):
             
             y_names = [y_name]
 
-
+            
             #  visualization step ......
 
             if chart_type == 'MULTI-LINE-CHART':
@@ -393,6 +396,7 @@ def generate_plot(request):
                                        
                                         }, status=200) 
         else:
+            
             return JsonResponse({'msg': 'error form was not valid', 
                                 }, status=400)
 
@@ -407,7 +411,7 @@ def data_file_upload(request):
 
     
     global persistent_data_state
-    if request.method == 'POST' and not request.is_ajax():  # file upload 
+    if request.method == 'POST' and not ( request.headers.get('x-requested-with') == 'XMLHttpRequest'):  # file upload 
         
 
         y_names = []

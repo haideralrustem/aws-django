@@ -1,0 +1,6 @@
+
+
+- Uses Django.
+- app1 is the main folder. Then project1 and project2 are for each project.
+- CSS is located at app1/static/app1
+- project2 is  using chatgpt API : https://platform.openai.com/settings/organization/usage
