@@ -362,8 +362,8 @@ nav {
 }
 
 .home-wrap {
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 4%;
+    margin-right: 4%;
 }
 
 .home-img-wrap {
@@ -518,8 +518,8 @@ h4.text-gp {
 }
 
 .card-img-photo {
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 85%;
     border-radius: 7px;
 }
 
@@ -785,7 +785,7 @@ div.alert {
     justify-content: space-between;
     align-items: center;
     padding: 0 1%;
-    margin-top: 20%;
+    margin-top: 10%;
     
     position: absolute;
     height: 450px;
@@ -1582,8 +1582,8 @@ div.alert {
         width: 28%;
     }
     .home-wrap {
-        margin-left: 9%;
-        margin-right: 9%;
+        margin-left: 15%;
+        margin-right: 15%;
     }
 
     .card-wrap  {
@@ -1703,6 +1703,11 @@ div.alert {
         width: 26%;
     }
 
+    .home-wrap {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+
     .card-wrap  {
         height: 16.5vw;
     }
@@ -1819,6 +1824,29 @@ div.alert {
     
     }
 }
+
+
+@media only screen and (min-width: 1600px) { 
+    .home-wrap {
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+    .footer {
+        height: fit-content;
+    }
+ }
+
+
+ @media only screen and (min-width: 2000px) { 
+    .home-wrap {
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+    .footer {
+        height: fit-content;
+    }
+ }
+
 
 
 /* ......height media queries.......... */

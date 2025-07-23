@@ -54,7 +54,7 @@
             <ul class="nav_links my_navbar centering hamburger">
                 <li ><a href="{{url_context.project1_url}}">Project Simple Grapher</a></li>
                 <li><a href="{{url_context.project2_url}}">Project Text Analyzer</a></li>
-                <li ><a href="{{url_context.food_suggester_url}}">Project Food Suggester</a></li>
+                {% comment %} <li ><a href="{{url_context.food_suggester_url}}">Project Food Suggester</a></li> {% endcomment %}
                 <li><a href="{% url 'app1:app1-about' %}">About</a></li>
                 
             </ul>
@@ -117,7 +117,7 @@
                 <ul id="drop_menu_list" class="drop_menu_list" >
                     <li><a href="{{url_context.project1_url}}">Project Simple Grapher</a></li> 
                     <li><a href="{{url_context.project2_url}}">Project Text Analyzer</a></li> 
-                    <li ><a href="{{url_context.food_suggester_url}}">Project Food Suggester</a></li>
+                    
                     
                     <li><a href="{% url 'app1:app1-about' %}" target="_blank">About</a></li>
                     
@@ -207,19 +207,19 @@
                     <a href="{{url_context.project2_url}}">Text Analyzer</a>
                 </p>
 
-                <p class="site-map-column-subtitle">
+                {% comment %} <p class="site-map-column-subtitle">
                     <a href="{{url_context.food_suggester_url}}">Food Suggester</a>
-                </p>
+                </p> {% endcomment %}
                 
             </div>
 
              <div class="site-map-column">
                 <p class="site-map-column-title">Other Works</p>
-                <p class="site-map-column-subtitle">
+                {% comment %} <p class="site-map-column-subtitle">
                     <a href="https://play.google.com/store/apps/details?id=com.haideralrustem1990.repark" target="_blank">
                         Re-Park App
                     </a>
-                </p>
+                </p> {% endcomment %}
                 <p class="site-map-column-subtitle">
                     <a href="https://public.tableau.com/profile/haider.al.rustem#!/?newProfile=&activeTab=0" target="_blank">
                         Tableau portfolio
