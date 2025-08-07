@@ -178,20 +178,21 @@ font-family: "valentine";
 
 .mid-content {
    margin-top: 10%;
-   margin-left: 15%;
-   margin-right: 15%;
+   margin-left: 20%;
+   margin-right: 20%;
 }
 
 .tutorial-card {
     display: flex;
     justify-content: space-around;
-    border-top: 5px solid #2b65d89d;
-    border-bottom: 5px solid #2b65d89d;
-    border-right: 5px solid #2b65d89d;
-    border-bottom-right-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top: 5px solid #2b65d827;
+    border-bottom: 5px solid #2b65d827;
+    /* border-right: 5px solid #2b65d827; */
+    /* border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px; */
+    border-radius: 12px;
     padding: 1%;
-    margin-bottom: 10%;
+    margin-bottom: 15%;
 
     transition: 0.5s box-shadow ease-in-out;
 }

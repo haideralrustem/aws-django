@@ -2,6 +2,8 @@ c:/Users/xario/PycharmProjects/django_app/venv/Scripts/Activate.ps1 ;
 cd haider_site;
 python manage.py runserver;
 
+# github landing page is located at https://github.com/haideralrustem/haideralrustem.github.io.git or
+# in documents: haideralrustem.github.io
 
 venv/Scripts/Activate.ps1;cd haider_site;python manage.py runserver;
 
